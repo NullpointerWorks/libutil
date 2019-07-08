@@ -1,4 +1,7 @@
-module libutil
+/**
+ * @since 1.0
+ */
+module com.nullpointerworks.util
 {
 	requires transitive java.desktop;
 	exports com.nullpointerworks.util;
