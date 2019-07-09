@@ -1,7 +1,7 @@
 /**
- * @since 1.0
+ * @version 1.0.0
  */
-module com.nullpointerworks.util
+module libnpw.util
 {
 	requires transitive java.desktop;
 	exports com.nullpointerworks.util;
