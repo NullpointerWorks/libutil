@@ -7,9 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 import com.nullpointerworks.util.Log;
+import com.nullpointerworks.util.file.Loader;
 import com.nullpointerworks.util.file.bytefile.ByteFile;
 import com.nullpointerworks.util.file.bytefile.ByteFileParser;
 
@@ -75,56 +75,7 @@ public class TextFileParser
 		
 		return true;
 	}
-	
-	/**
-	 * 
-	 */
-	public static TextFile file(File file)
-	{
-		FileReader fr;
-		BufferedReader br = null;
-		TextFile tf = new TextFile();
-		String path = file.getAbsolutePath();
-		tf.setName(file.getName());
 		
-		try 
-		{
-			fr = new FileReader(file);
-			br = new BufferedReader(fr);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			boolean b = create(path);
-			if (b)
-			{
-				return file(path);
-			}
-		}
-		
-		// check if the writer exists
-		if (br == null)
-		{
-			Log.err("TextFileParser: Filereader is null. Cannot load file.");
-			return tf;
-		}
-		
-		String line;
-		try 
-		{
-			while ( (line = br.readLine())!=null )
-			{
-				tf.addLine( line );
-			}
-			br.close();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return tf;
-	}
-	
 	/**
 	 * 
 	 */
@@ -132,8 +83,8 @@ public class TextFileParser
 	{
 		FileReader fr;
 		BufferedReader br = null;
-		TextFile tf = new TextFile();
 		File f = new File(path);
+		TextFile tf = new TextFile();
 		tf.setName(f.getName());
 		
 		try 
@@ -174,7 +125,7 @@ public class TextFileParser
 		return tf;
 	}
 	
-	/*
+	/**
 	 * 
 	 */
 	public static TextFile resource(String path)
@@ -184,43 +135,20 @@ public class TextFileParser
 			Log.err("TextFileParser: The given path string is null");
 			return new TextFile();
 		}
-		
-		// check first char for a '/'
-		char c = path.charAt(0);
-		if (c == '/') path = path.substring(1, path.length());
-		
-		URL fileurl = ClassLoader.getSystemClassLoader().getResource(path);
-		
-		if (fileurl==null)
-		{
-			Log.err("TextFileParser: The resource \""+path+"\" could not be found");
-			return new TextFile();
-		}
-		
-		TextFile tf = read(fileurl);
-		File f = new File(path);
-		tf.setName(f.getName());
-		return tf;
+		InputStream is = Loader.getResourceAsStream(path);
+		return read(is);
 	}
-	
+
 	/**
 	 * 
 	 */
-	public static TextFile read(URL url)
+	public static TextFile stream(InputStream is)
 	{
-		InputStream is = null;
-		try 
+		if (is==null)
 		{
-			is = url.openStream();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
+			Log.err("TextFileParser: The given inputstream is null");
 		}
-		TextFile tf = read(is);
-		File f = new File(url.getFile());
-		tf.setName(f.getName());
-		return tf;
+		return read(is);
 	}
 	
 	/**

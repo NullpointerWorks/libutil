@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.nullpointerworks.util.Log;
+import com.nullpointerworks.util.file.Loader;
 
 public class ByteFileParser 
 {
@@ -81,6 +82,19 @@ public class ByteFileParser
 	/**
 	 * 
 	 */
+	public static ByteFile stream(InputStream is)
+	{
+		if (is==null)
+		{
+			Log.err("ByteFileParser: The given inputstream is null");
+		}
+		byte[] data = read(is);
+		return new ByteFile(data);
+	}
+	
+	/**
+	 * 
+	 */
 	public static ByteFile resource(String path)
 	{
 		if (path==null)
@@ -89,11 +103,15 @@ public class ByteFileParser
 			return new ByteFile();
 		}
 		
-		// check first char for a '/'
-		char c = path.charAt(0);
-		if (c == '/') path = path.substring(1, path.length());
-		
-		URL fileurl = ClassLoader.getSystemClassLoader().getResource(path);
+		URL fileurl = Loader.getResource(path);
+		if (fileurl==null)
+		{
+			char c = path.charAt(0);
+			if (c != '/')
+			{
+				fileurl = Loader.getResource("/"+path);
+			}
+		}
 		
 		if (fileurl==null)
 		{
