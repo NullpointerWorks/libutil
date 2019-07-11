@@ -1,15 +1,15 @@
 package com.nullpointerworks.util.file.textfile;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import com.nullpointerworks.util.Log;
-import com.nullpointerworks.util.file.Loader;
 import com.nullpointerworks.util.file.bytefile.ByteFile;
 import com.nullpointerworks.util.file.bytefile.ByteFileParser;
 
@@ -47,16 +47,21 @@ public class TextFileParser
 		}
 		
 		// test encoding
-		String enc = "UTF16";
+		String enc = "UTF-16";
 		switch(encoding)
 		{
 		case "UTF8":
 		case "UTF16":
 		case "UTF32": 
+			enc = "UTF-"+encoding.substring(3);
+			break;
+		case "UTF-8":
+		case "UTF-16":
+		case "UTF-32": 
 			enc = encoding;
 			break;
 		default:
-			Log.err("TextFileParser: Invalid encoding. Defaulting to UTF16");
+			Log.err("TextFileParser: Invalid encoding. Defaulting to UTF-16");
 			return false;
 		}
 
@@ -72,71 +77,17 @@ public class TextFileParser
 		}
 		
 		ByteFileParser.write(path, bf);
-		
 		return true;
-	}
-		
-	/**
-	 * 
-	 */
-	public static TextFile file(String path)
-	{
-		FileReader fr;
-		BufferedReader br = null;
-		File f = new File(path);
-		TextFile tf = new TextFile();
-		tf.setName(f.getName());
-		
-		try 
-		{
-			fr = new FileReader(path);
-			br = new BufferedReader(fr);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			boolean b = create(path);
-			if (b)
-			{
-				return file(path);
-			}
-		}
-		
-		// check if the writer exists
-		if (br == null)
-		{
-			Log.err("TextFileParser: Filereader is null. Can't load file.");
-			return tf;
-		}
-		
-		String line;
-		try 
-		{
-			while ( (line = br.readLine())!=null )
-			{
-				tf.addLine( line );
-			}
-			br.close();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return tf;
 	}
 	
 	/**
-	 * 
+	 * @throws FileNotFoundException 
 	 */
-	public static TextFile resource(String path)
+	public static TextFile file(String path) throws FileNotFoundException
 	{
-		if (path==null)
-		{
-			Log.err("TextFileParser: The given path string is null");
-			return new TextFile();
-		}
-		InputStream is = Loader.getResourceAsStream(path);
-		return read(is);
+		final File f = new File("src/test/resources/sample.txt");
+	    final InputStream is = new DataInputStream(new FileInputStream(f));
+		return stream(is);
 	}
 
 	/**
@@ -146,19 +97,8 @@ public class TextFileParser
 	{
 		if (is==null)
 		{
-			Log.err("TextFileParser: The given inputstream is null");
-		}
-		return read(is);
-	}
-	
-	/**
-	 * 
-	 */
-	public static TextFile read(InputStream is)
-	{
-		if (is==null)
-		{
 			Log.err("TextFileParser: Reader inputstream is null.");
+			return new TextFile();
 		}
 		
 		InputStreamReader isr = new InputStreamReader( is );
@@ -182,28 +122,6 @@ public class TextFileParser
 		}
 		
 		return tf;
-	}
-	
-	/**
-	 * create the file and directory for the given path. 
-	 * returns true if creation succeeded, false otherwise
-	 */
-	public static boolean create(String path)
-	{
-		File f = new File(path);
-		if (f.exists()) return false;
-		try 
-		{
-			if (f.getParentFile()!=null) // make directories if they don't exist
-				f.getParentFile().mkdirs();
-			f.createNewFile();
-			return true;
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		return false;
 	}
 	
 	/**

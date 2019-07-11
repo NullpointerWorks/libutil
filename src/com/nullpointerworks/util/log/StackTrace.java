@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Calendar;
 
+import com.nullpointerworks.util.FileUtil;
 import com.nullpointerworks.util.Log;
-import com.nullpointerworks.util.file.textfile.TextFileParser;
 
 public class StackTrace 
 {
@@ -30,8 +30,8 @@ public class StackTrace
 					+"_"+ss
 					+".log";
 		
-		TextFileParser.create(path);
-		File file 	= new File(path);
+		FileUtil.create(path);
+		File file = new File(path);
 		try 
 		{
 			PrintStream ps = new PrintStream(file);

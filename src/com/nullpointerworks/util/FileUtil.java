@@ -108,4 +108,26 @@ public class FileUtil
         in.close();
         out.close();
 	}
+	
+	/**
+	 * create the file and directory for the given path. 
+	 * returns true if creation succeeded, false otherwise
+	 */
+	public static boolean create(String path)
+	{
+		File f = new File(path);
+		if (f.exists()) return false;
+		try 
+		{
+			if (f.getParentFile()!=null) // make directories if they don't exist
+				f.getParentFile().mkdirs();
+			f.createNewFile();
+			return true;
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

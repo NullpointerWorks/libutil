@@ -1,16 +1,13 @@
 package com.nullpointerworks.util.file.bytefile;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import com.nullpointerworks.util.Log;
-import com.nullpointerworks.util.file.Loader;
 
 public class ByteFileParser 
 {
@@ -40,43 +37,25 @@ public class ByteFileParser
 		}
 		
 		FileOutputStream fos;
-		
 		fos = new FileOutputStream(path);
 		fos.write(data);
 		fos.close();
-		
 		fos=null;
 	}
 	
 	/**
-	 * 
+	 * @throws IOException 
 	 */
-	public static ByteFile file(String path)
+	public static ByteFile file(String path) throws IOException
 	{
 		if (path==null)
 		{
 			Log.err("NullPointer: The given path string is null");
 			return new ByteFile();
 		}
-		
-		Path filepath = Paths.get(path);
-		byte[] data = {};
-		
-		try 
-		{
-			data = Files.readAllBytes(filepath);
-		} 
-		catch (NoSuchFileException e) 
-		{
-			Log.err("File "+path+" does not exist.");
-		}
-		catch (IOException e) 
-		{
-			Log.err("Error while reading "+path+".");
-			e.printStackTrace();
-		}
-		
-		return new ByteFile(data);
+		final File f = new File(path);
+	    final InputStream is = new DataInputStream(new FileInputStream(f));
+		return stream(is);
 	}
 	
 	/**
@@ -86,76 +65,16 @@ public class ByteFileParser
 	{
 		if (is==null)
 		{
-			Log.err("ByteFileParser: The given inputstream is null");
-		}
-		byte[] data = read(is);
-		return new ByteFile(data);
-	}
-	
-	/**
-	 * 
-	 */
-	public static ByteFile resource(String path)
-	{
-		if (path==null)
-		{
-			Log.err("NullPointer: The given path string is null");
+			Log.err("NullPointer: The inputstream is null");
 			return new ByteFile();
 		}
 		
-		URL fileurl = Loader.getResource(path);
-		if (fileurl==null)
-		{
-			char c = path.charAt(0);
-			if (c != '/')
-			{
-				fileurl = Loader.getResource("/"+path);
-			}
-		}
-		
-		if (fileurl==null)
-		{
-			Log.err("NullPointer: The resource \""+path+"\" could not be found");
-			return new ByteFile();
-		}
-		
-		byte[] data = read(fileurl);
-		return new ByteFile(data);
-	}
-	
-	/**
-	 * 
-	 */
-	public static byte[] read(URL url)
-	{
-		InputStream is = null;
-		try 
-		{
-			is = url.openStream();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		return read(is);
-	}
-	
-	/**
-	 * 
-	 */
-	public static byte[] read(InputStream is)
-	{
-		if (is==null)
-		{
-			Log.err("NullPointer in the "+ByteFileParser.class+" inputstream reader.");
-		}
-		
-		ByteFile bf = new ByteFile(null);
+		ByteFile bf = new ByteFile();
 		try 
 		{
 			byte[] byteChunk = new byte[4096];
 			int n;
-			while ( (n = is.read(byteChunk)) > 0 ) 
+			while ( (n = is.read(byteChunk)) > 0 )
 			{
 				bf.addBytes(byteChunk, 0, n);
 			}
@@ -177,10 +96,8 @@ public class ByteFileParser
 					e.printStackTrace();
 				} 
 			}
-			
 			is = null;
 		}
-		
-		return bf.getBytes();
+		return bf;
 	}
 }

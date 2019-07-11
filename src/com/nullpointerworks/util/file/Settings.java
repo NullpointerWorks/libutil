@@ -1,5 +1,6 @@
 package com.nullpointerworks.util.file;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -87,8 +88,9 @@ public class Settings
 	
 	/**
 	 * load the settings file
+	 * @throws FileNotFoundException 
 	 */
-	public void loadFile()
+	public void loadFile() throws FileNotFoundException
 	{
 		TextFile file = TextFileParser.file(path);
 		String[] lines = file.getLines();

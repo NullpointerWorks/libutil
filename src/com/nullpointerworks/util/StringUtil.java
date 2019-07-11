@@ -166,6 +166,16 @@ public class StringUtil
 	}
 	
 	/**
+	 * Replaces all duplicate spaces with a single space.
+	 * @param line
+	 * @return the given text with all duplicate spaces removed
+	 */
+	public static String compactSpaces(String line)
+	{
+		return line.trim().replaceAll("\\s{2,}", " ");
+	}
+	
+	/**
 	 * Strip the leading characters from the given string until the terminator has been found.<br>
 	 * The terminator character will not be included in the result.
 	 */

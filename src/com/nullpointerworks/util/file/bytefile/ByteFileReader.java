@@ -9,10 +9,7 @@ public class ByteFileReader implements Nullable
 	private int stride = 0;
 	private int size = 0;
 	
-	public ByteFileReader()
-	{
-		
-	}
+	public ByteFileReader() { }
 	
 	ByteFileReader(ByteFile file)
 	{
