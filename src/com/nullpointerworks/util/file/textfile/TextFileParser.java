@@ -85,7 +85,7 @@ public class TextFileParser
 	 */
 	public static TextFile file(String path) throws FileNotFoundException
 	{
-		final File f = new File("src/test/resources/sample.txt");
+		final File f = new File(path);
 	    final InputStream is = new DataInputStream(new FileInputStream(f));
 		return stream(is);
 	}

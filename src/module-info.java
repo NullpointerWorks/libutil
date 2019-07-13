@@ -1,5 +1,6 @@
 /**
  * @version 1.0.3
+ * @author Michiel Drost - nullpointerworks
  */
 module libnpw.util
 {
