@@ -1,8 +1,14 @@
+/*
+ * Creative Commons - Attribution, Share Alike 4.0 
+ * Nullpointer Works (2019)
+ * Use is subject to license terms.
+ */
 package com.nullpointerworks.util;
 
 /**
  * Contains all ASCII codes from 0-127 as static integers. Code -1 is set as an error code.
- * @author Michiel Drost - nullpointerworks
+ * @author Michiel Drost - Nullpointer Works
+ * @since 1.0.0
  */
 public class ASCII
 {

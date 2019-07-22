@@ -1,11 +1,21 @@
+/*
+ * Creative Commons - Attribution, Share Alike 4.0 
+ * Nullpointer Works (2019)
+ * Use is subject to license terms.
+ */
 package com.nullpointerworks.util;
 
 import java.util.Map;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class SystemUtil 
 {
 	/**
-	 * On Windows, returns the path to the Roaming folder
+	 * On Windows, returns the path to the Roaming folder.
+	 * @since 1.0.0
 	 */
 	public static String Roaming()
 	{
@@ -13,7 +23,8 @@ public class SystemUtil
 	}
 	
 	/**
-	 * On Windows, returns the path to the hidden AppData folder
+	 * On Windows, returns the path to the hidden AppData folder.
+	 * @since 1.0.0
 	 */
 	public static String AppData()
 	{
@@ -22,6 +33,7 @@ public class SystemUtil
 	
 	/**
 	 * 
+	 * @since 1.0.0
 	 */
 	public static String Home()
 	{
@@ -30,6 +42,7 @@ public class SystemUtil
 	
 	/**
 	 * 
+	 * @since 1.0.0
 	 */
 	public static String getProperty(String s)
 	{
@@ -38,6 +51,7 @@ public class SystemUtil
 	
 	/**
 	 * 
+	 * @since 1.0.0
 	 */
 	public static void printProperties()
 	{
