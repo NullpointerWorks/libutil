@@ -12,10 +12,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class FileUtil 
 {
 	/**
 	 * Returns true if the given path points to an existing file
+	 * @since 1.0.0
 	 */
 	public static boolean exists(String path)
 	{
@@ -30,7 +35,8 @@ public class FileUtil
 	
 	/**
 	 * Returns the path to the source code of this executable jar. When placed over LAN, <br>
-	 * it returns a String with the URL
+	 * @return a String with the URL
+	 * @since 1.0.0
 	 */
 	public static String getSourceCodePath(Class<?> clazz)
 	{
@@ -53,7 +59,8 @@ public class FileUtil
 	}
 	
 	/**
-	 * Returns the last potion of the given path that indicates the name of a file
+	 * Returns the last portion of the given path that indicates the name of a file
+	 * @since 1.0.0
 	 */
 	public static String getFileNameFromPath(String path)
 	{
@@ -65,6 +72,7 @@ public class FileUtil
 	
 	/**
 	 * 
+	 * @since 1.0.0
 	 */
 	public static void copyDirectory(File sourceDir , File targetDir) throws IOException 
 	{
@@ -89,6 +97,7 @@ public class FileUtil
 	
 	/**
 	 * 
+	 * @since 1.0.0
 	 */
 	public static void copyFile(File sourceFile, File destFile) throws IOException 
 	{
@@ -115,8 +124,10 @@ public class FileUtil
 	}
 	
 	/**
-	 * create the file and directory for the given path. 
-	 * returns true if creation succeeded, false otherwise
+	 * Creates a file and directory structure at the given path. 
+	 * @param path - the path with the file location
+	 * @return {@code true} if creation succeeded, {@code false} otherwise
+	 * @since 1.0.0
 	 */
 	public static boolean create(String path)
 	{
