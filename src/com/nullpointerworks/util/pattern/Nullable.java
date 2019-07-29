@@ -5,8 +5,21 @@
  */
 package com.nullpointerworks.util.pattern;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public interface Nullable 
 {
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public boolean isNull();
-	public void isNull(boolean isnull);
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public default void isNull(boolean isnull) {}
 }

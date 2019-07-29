@@ -8,17 +8,30 @@ package com.nullpointerworks.util.file.bytefile;
 import java.util.ArrayList;
 
 import com.nullpointerworks.util.Log;
+import com.nullpointerworks.util.pattern.Nullable;
 
-public class ByteFile
+/**
+ * 
+ * @since 1.0.0
+ */
+public class ByteFile implements Nullable
 {
 	private ArrayList<Byte> data;
 	private String name = "";
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public ByteFile() 
 	{
 		data = new ArrayList<Byte>();
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public ByteFile(byte[] d) 
 	{
 		data = new ArrayList<Byte>();
@@ -29,21 +42,37 @@ public class ByteFile
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public String getName() 
 	{
 		return name;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void clear()
 	{
 		data.clear();
 	}
-
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void addBytes(byte[] d) 
 	{
 		for (byte b : d)
@@ -52,6 +81,10 @@ public class ByteFile
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void addBytes(byte[] chunk, int offset, int length) 
 	{
 		for (int i=offset, l=offset+length; i<l; i++)
@@ -59,7 +92,11 @@ public class ByteFile
 			data.add( chunk[i] );
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public byte[] getBytes()
 	{
 		int l = data.size();
@@ -71,11 +108,19 @@ public class ByteFile
 		return bytes;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void addByte(byte d) 
 	{
 		data.add(d);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public byte getByte(int index)
 	{
 		if (index<0 || index >= data.size()) 
@@ -87,17 +132,26 @@ public class ByteFile
 		return data.get(index);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public ByteFileReader getReader()
 	{
 		return new ByteFileReader(this);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void free() 
 	{
 		data.clear();
 		data=null;
 	}
-
+	
+	@Override
 	public boolean isNull()
 	{
 		return data.size() < 1;

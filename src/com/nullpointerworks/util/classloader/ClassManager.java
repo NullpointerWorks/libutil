@@ -7,6 +7,10 @@ package com.nullpointerworks.util.classloader;
 
 import com.nullpointerworks.util.pack.node.Node;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class ClassManager
 {
 	private static ClassManager instance=null;

@@ -5,51 +5,76 @@
  */
 package com.nullpointerworks.util.file.bytefile;
 
-import com.nullpointerworks.util.Log;
 import com.nullpointerworks.util.pattern.Nullable;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class ByteFileReader implements Nullable 
 {
 	private ByteFile file = null;
 	private int stride = 0;
 	private int size = 0;
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public ByteFileReader() { }
 	
-	ByteFileReader(ByteFile file)
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public ByteFileReader(ByteFile file)
 	{
-		isNull(false);
 		setFile(file);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void setFile(ByteFile file)
 	{
+		isNull(false);
 		this.file=file;
 		size = file.getBytes().length;
 	}
 	
-	private byte error() 
-	{
-		Log.err("Read Error: ByteFile reader has reached the end of the file.");
-		return -1;
-	}
-	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void resetStride()
 	{
 		stride = 0;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public int getStride()
 	{
 		return stride;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public int getSize()
 	{
 		return size;
 	}
 	
-	public byte[] getBytes(int amount)
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public byte[] getBytes(int amount) throws EndOfFileException
 	{
 		byte[] b = new byte[amount];
 		
@@ -62,48 +87,98 @@ public class ByteFileReader implements Nullable
 		return b;
 	}
 	
-	public byte getByte()
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public byte getByte() throws EndOfFileException
 	{
-		if (stride >= size) return error();
+		if (stride >= size) throw new EndOfFileException( size - stride );
 		return file.getByte(stride++);
 	}
 	
-	public short getShort()
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public short getShort() throws EndOfFileException
 	{
-		if ((stride+2) >= size) return error();
-
-		int b1 = getByte() &0xFF;
-		int b2 = getByte() &0xFF;
-		
-		return (short)( (b2<<8) | b1);
+		if ((stride+1) >= size) throw new EndOfFileException( size - (stride+1) );
+		byte b1 = getByte();
+		byte b2 = getByte();
+		return toShort(b1,b2);
 	}
 	
-	public int getInteger()
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public int getInteger() throws EndOfFileException
 	{
-		if ((stride+4) >= size) return error();
-		
-		int s1 = getShort() &0xFF;
-		int s2 = getShort() &0xFF;
-		
-		return ((s2<<16) | (s1));
+		if ((stride+3) >= size) throw new EndOfFileException(size - (stride+3));
+		byte b1 = getByte();
+		byte b2 = getByte();
+		byte b3 = getByte();
+		byte b4 = getByte();
+		return toInt(b1,b2,b3,b4);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public long getLong() throws EndOfFileException
+	{
+		if ((stride+7) >= size) throw new EndOfFileException(size - (stride+7));
+		byte b1 = getByte();
+		byte b2 = getByte();
+		byte b3 = getByte();
+		byte b4 = getByte();
+		byte b5 = getByte();
+		byte b6 = getByte();
+		byte b7 = getByte();
+		byte b8 = getByte();
+		return toLong(b1,b2,b3,b4,b5,b6,b7,b8);
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public boolean reachedEOF()
 	{
 		return stride >= size;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void free()
 	{
 		file.free();
 		file=null;
 	}
 	
-	// =====================================
+	private final short toShort(byte a, byte b)
+	{
+		return (short) ( a<<8 | b );
+	}
+		
+	private final int toInt(byte a, byte b,byte c,byte d)
+	{
+		return (int)( a<<24 | b<<16 | c<<8 | d );
+	}
+	
+	private final long toLong(byte a, byte b,byte c,byte d, byte e, byte f,byte g,byte h)
+	{
+		return (long)( a<<56 | b<<48 | c<<40 | d<<32 | e<<24 | f<<16 | g<<8 | h );
+	}
 	
 	private boolean isnull = true;
 	@Override
 	public boolean isNull() {return isnull;}
+	
 	@Override
 	public void isNull(boolean n) {isnull=n;}
 }
