@@ -3,37 +3,42 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.classloader;
+package exp.nullpointerworks.util.classloader;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class DynamicURLClassLoader extends URLClassLoader
 {
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public DynamicURLClassLoader(File f) throws MalformedURLException
 	{
 		super( new URL[] { f.toURI().toURL() });
 	}
 	
-	// called by the ClassManager
-	public Class<?> loadClassByPath(String classname)
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public Class<?> loadClassByPath(String classname) throws ClassNotFoundException
 	{
 		Class<?> testclazz = null;
-		try
-		{
-			testclazz = Class.forName(classname, true, this);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
+		testclazz = Class.forName(classname, true, this);
 		return testclazz;
 	}
 	
 	/**
-	 * custom class searching. 
+	 * 
+	 * @since 1.0.0
 	 */
 	@Override
 	protected Class<?> findClass(String classname) throws ClassNotFoundException

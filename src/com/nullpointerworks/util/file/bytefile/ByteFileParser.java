@@ -14,10 +14,16 @@ import java.io.InputStream;
 
 import com.nullpointerworks.util.Log;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class ByteFileParser 
 {
 	/**
 	 * 
+	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public static void write(String path, ByteFile file) throws IOException
 	{
@@ -26,6 +32,8 @@ public class ByteFileParser
 	
 	/**
 	 * 
+	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public static void write(String path, byte[] data) throws IOException
 	{
@@ -49,7 +57,9 @@ public class ByteFileParser
 	}
 	
 	/**
+	 * 
 	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public static ByteFile file(String path) throws IOException
 	{
@@ -65,8 +75,10 @@ public class ByteFileParser
 	
 	/**
 	 * 
+	 * @throws IOException 
+	 * @since 1.0.0
 	 */
-	public static ByteFile stream(InputStream is)
+	public static ByteFile stream(InputStream is) throws IOException
 	{
 		if (is==null)
 		{
@@ -75,34 +87,19 @@ public class ByteFileParser
 		}
 		
 		ByteFile bf = new ByteFile();
-		try 
+		byte[] byteChunk = new byte[4096];
+		int n;
+		while ( (n = is.read(byteChunk)) > 0 )
 		{
-			byte[] byteChunk = new byte[4096];
-			int n;
-			while ( (n = is.read(byteChunk)) > 0 )
-			{
-				bf.addBytes(byteChunk, 0, n);
-			}
+			bf.addBytes(byteChunk, 0, n);
 		}
-		catch (IOException e) 
-		{
-			e.printStackTrace();
+		
+		if (is != null) 
+		{ 
+			is.close();
 		}
-		finally 
-		{
-			if (is != null) 
-			{ 
-				try 
-				{
-					is.close();
-				} 
-				catch (IOException e) 
-				{
-					e.printStackTrace();
-				} 
-			}
-			is = null;
-		}
+		
+		is = null;
 		return bf;
 	}
 }

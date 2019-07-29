@@ -3,7 +3,7 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.classloader;
+package exp.nullpointerworks.util.classloader;
 
 import com.nullpointerworks.util.pack.node.Node;
 
@@ -14,29 +14,57 @@ import com.nullpointerworks.util.pack.node.Node;
 public class ClassManager
 {
 	private static ClassManager instance=null;
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public final static ClassManager getInstance()
 	{
-		initialize();
+		newInstance();
 		return instance;
 	}
 	
-	public final static void initialize()
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public final static void newInstance()
 	{
 		if (instance==null) instance = new ClassManager();
 	}
-
-	// =============================================================
 	
 	private Node<Class<?>> rootNode = new Node<Class<?>>("ClassManager");
-	private JarDirLoader jarLoader = new JarDirLoader();
+	private JarLoader jarLoader = new JarLoader();
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	private ClassManager() { }
 	
-	public void loadJars(String path)
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public void loadAllJars(String path)
 	{
 		jarLoader.loadAllJars( path );
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public void loadJarFile(String path)
+	{
+		jarLoader.loadJarFile( path );
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void printNodes()
 	{
 		synchronized(rootNode)
@@ -45,6 +73,10 @@ public class ClassManager
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void createEntry(String classPath, Class<?> clazz)
 	{
 		synchronized(rootNode)
@@ -53,6 +85,10 @@ public class ClassManager
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public Class<?> findClass(String classname)
 	{
 		synchronized(rootNode)

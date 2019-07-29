@@ -6,44 +6,55 @@
 package com.nullpointerworks.util.file.bytefile;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.nullpointerworks.util.Log;
 import com.nullpointerworks.util.pattern.Nullable;
 
 /**
- * 
+ * A byte array container to be used for reading and writing raw binary files. 
  * @since 1.0.0
  */
 public class ByteFile implements Nullable
 {
-	private ArrayList<Byte> data;
+	private List<Byte> data;
 	private String name = "";
 	
 	/**
-	 * 
+	 * Creates a new empty byte file.
 	 * @since 1.0.0
 	 */
 	public ByteFile() 
 	{
-		data = new ArrayList<Byte>();
+		this(null);
 	}
 	
 	/**
-	 * 
+	 * Creates a new byte file object initialized with the given {@code byte} array.
+	 * @param data - the data to initialize with
 	 * @since 1.0.0
 	 */
-	public ByteFile(byte[] d) 
+	public ByteFile(byte[] data) 
 	{
-		data = new ArrayList<Byte>();
-		if (d!=null)
-		for (byte b : d)
-		{
-			data.add(b);
-		}
+		this(data,"");
 	}
 	
 	/**
-	 * 
+	 * Creates a new byte file object initialized with the given {@code byte} array and a name for the file.
+	 * @param data - the initializing data
+	 * @param name - the name of the file without an extension
+	 * @since 1.0.0
+	 */
+	public ByteFile(byte[] data, String name) 
+	{
+		setName(name);
+		this.data = new ArrayList<Byte>();
+		if (data!=null) addBytes(data);
+	}
+	
+	/**
+	 * Returns the name of the file.
+	 * @return the name of the file
 	 * @since 1.0.0
 	 */
 	public String getName() 
@@ -53,11 +64,12 @@ public class ByteFile implements Nullable
 	
 	/**
 	 * 
+	 * @param name - the name of the file without an extension
 	 * @since 1.0.0
 	 */
 	public void setName(String name) 
 	{
-		this.name = name;
+		if (name!=null) this.name = name;
 	}
 	
 	/**
@@ -125,7 +137,7 @@ public class ByteFile implements Nullable
 	{
 		if (index<0 || index >= data.size()) 
 		{
-			Log.err("ArrayIndexOutOfBounds: The index provided ("+index+") is out of the bounds of the ByteFile");
+			Log.err("ArrayIndexOutOfBounds: The index provided ("+index+") is out of the bounds.");
 			return 0;
 		}
 		
