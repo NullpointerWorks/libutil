@@ -5,14 +5,18 @@
  */
 package com.nullpointerworks.util;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class StringUtil 
 {
 	public static final boolean NO_TRIM = false;
 	public static final boolean TRIM 	= true;
 	
 	/**
-	 * Returns an array of String objects containing the parts separated 
-	 * with the given identifier.
+	 * Returns an array of String objects containing the parts separated with the given identifier.
+	 * @since 1.0.0
 	 */
 	public static String[] tokenize(String line, String sep, boolean trim)
 	{
@@ -28,8 +32,8 @@ public class StringUtil
 	}
 	
 	/**
-	 * Returns an array of String objects containing the parts separated 
-	 * with the given identifier.
+	 * Returns an array of String objects containing the parts separated with the given identifier.
+	 * @since 1.0.0
 	 */
 	public static String[] tokenize(String line, String sep)
 	{
@@ -38,6 +42,7 @@ public class StringUtil
 	
 	/**
 	 * Returns a reference free clone of the given array
+	 * @since 1.0.0
 	 */
 	public static String[] clone(String[] a)
 	{
@@ -58,6 +63,7 @@ public class StringUtil
 
 	/**
 	 * Returns true if the given String can be parsed as an integer number.
+	 * @since 1.0.0
 	 */
 	public static boolean isInteger(String str)
 	{
@@ -66,6 +72,7 @@ public class StringUtil
 	
 	/**
 	 * Returns true if the given String can be parsed as an hexadecimal number.
+	 * @since 1.0.0
 	 */
 	public static boolean isHexadec(String str)
 	{
@@ -74,6 +81,7 @@ public class StringUtil
 	
 	/**
 	 * Returns true if the given String can be parsed as a floating point number.
+	 * @since 1.0.0
 	 */
 	public static boolean isFloating(String str)
 	{
@@ -82,7 +90,8 @@ public class StringUtil
 	
 	/**
 	 * Parse the given String to a double primitive.<br>
-	 * Returns -1.0 if an error occurs.
+	 * @return -1.0 if an error occurs.
+	 * @since 1.0.0
 	 */
 	public static double toDouble(String v) 
 	{
@@ -98,6 +107,7 @@ public class StringUtil
 	
 	/**
 	 * Swap the extension of the given string with another.
+	 * @since 1.0.0
 	 */
 	public static String swapExtension(String fileName, String newExt) 
 	{
@@ -108,6 +118,7 @@ public class StringUtil
 	
 	/**
 	 * Parses a file extension behind the given text if there is no file extension added.
+	 * @since 1.0.0
 	 */
 	public static String getFileExtension(String str)
 	{
@@ -118,6 +129,7 @@ public class StringUtil
 	
 	/**
 	 * Parses a file extension behind the given text if there is no file extension added.
+	 * @since 1.0.0
 	 */
 	public static String addFileExtension(String text, String pend)
 	{
@@ -136,6 +148,7 @@ public class StringUtil
 	
 	/**
 	 * Replaces string representation of the given integer from the back of the given string.
+	 * @since 1.0.0
 	 */
 	public static String fillWithNumber(String filler, int i) 
 	{
@@ -144,8 +157,8 @@ public class StringUtil
 	}
 	
 	/**
-	 * Returns the message with added characters until a given length has been reached. <br>
-	 * Clips the end of the string if it passes the length.
+	 * Returns the message with added characters until a given length has been reached. Clips the end of the string if it passes the length.
+	 * @since 1.0.0
 	 */
 	public static String fill(String msg, String chr, int leng) 
 	{
@@ -157,6 +170,7 @@ public class StringUtil
 	
 	/**
 	 * Turn the string array into a string with the given separator, start- and end-index.
+	 * @since 1.0.0
 	 */
 	public static String compile(String[] t, String sep, int start, int end)
 	{
@@ -174,6 +188,7 @@ public class StringUtil
 	 * Replaces all duplicate spaces with a single space.
 	 * @param line
 	 * @return the given text with all duplicate spaces removed
+	 * @since 1.0.0
 	 */
 	public static String compactSpaces(String line)
 	{
@@ -181,8 +196,8 @@ public class StringUtil
 	}
 	
 	/**
-	 * Strip the leading characters from the given string until the terminator has been found.<br>
-	 * The terminator character will not be included in the result.
+	 * Strip the leading characters from the given string until the terminator has been found. The terminator character will not be included in the result.
+	 * @since 1.0.0
 	 */
 	public static String strip(String line, String terminator)
 	{
@@ -204,8 +219,8 @@ public class StringUtil
 	}
 	
 	/**
-	 * Scan characters from the start of the given string until the terminator has been found.<br>
-	 * The result will not include the terminator character.
+	 * Scan characters from the start of the given string until the terminator has been found. The result will not include the terminator character.
+	 * @since 1.0.0
 	 */
 	public static String scan(String line, String terminator)
 	{

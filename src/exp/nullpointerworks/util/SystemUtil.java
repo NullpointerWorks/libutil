@@ -3,9 +3,11 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util;
+package exp.nullpointerworks.util;
 
 import java.util.Map;
+
+import com.nullpointerworks.util.Log;
 
 /**
  * 
@@ -60,5 +62,4 @@ public class SystemUtil
 		    Log.out(String.format("%s = %s", e.getKey(), e.getValue())); 
 		}
 	}
-	
 }

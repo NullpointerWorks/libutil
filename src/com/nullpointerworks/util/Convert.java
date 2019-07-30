@@ -7,6 +7,7 @@ package com.nullpointerworks.util;
 
 /**
  * Set of delegate methods to help convert values
+ * @since 1.0.0
  */
 public class Convert 
 {

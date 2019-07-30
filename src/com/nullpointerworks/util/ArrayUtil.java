@@ -5,10 +5,15 @@
  */
 package com.nullpointerworks.util;
 
-public class ByteUtil
+/**
+ * 
+ * @since 1.0.0
+ */
+public class ArrayUtil
 {
 	/** 
 	 * Concatenate the given byte arrays. 
+	 * @since 1.0.0
 	 */
 	public static byte[] concatenate(byte[] arr0, byte[] arr1)
 	{
@@ -30,6 +35,7 @@ public class ByteUtil
 	
 	/** 
 	 * Copy the given byte array. 
+	 * @since 1.0.0
 	 */
 	public static byte[] copy(byte[] arr)
 	{

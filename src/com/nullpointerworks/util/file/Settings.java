@@ -13,6 +13,10 @@ import com.nullpointerworks.util.StringUtil;
 import com.nullpointerworks.util.file.textfile.TextFile;
 import com.nullpointerworks.util.file.textfile.TextFileParser;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class Settings 
 {
 	private boolean insertUnknown = false;
@@ -21,6 +25,10 @@ public class Settings
 	private String SEP = "=";
 	private String path;
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public Settings(String path)
 	{
 		settings = new ArrayList<String[]>();
@@ -29,6 +37,7 @@ public class Settings
 	
 	/**
 	 * add a header and value into the settings.
+	 * @since 1.0.0
 	 */
 	public void addDefault(String header, String value)
 	{
@@ -37,6 +46,7 @@ public class Settings
 	
 	/**
 	 * add a header to read from the settings file
+	 * @since 1.0.0
 	 */
 	public void addHeader(String header)
 	{
@@ -45,6 +55,7 @@ public class Settings
 	
 	/**
 	 * add a comment line to the settings
+	 * @since 1.0.0
 	 */
 	public void addComment(String msg) 
 	{
@@ -53,6 +64,7 @@ public class Settings
 	
 	/**
 	 * adds records from file that do not match the set defaults
+	 * @since 1.0.0
 	 */
 	public void setFillUnknown(boolean u)
 	{
@@ -61,6 +73,7 @@ public class Settings
 	
 	/**
 	 * Set the character to be ignored be the parser
+	 * @since 1.0.0
 	 */
 	public void setCommentMarker(String r)
 	{
@@ -69,6 +82,7 @@ public class Settings
 	
 	/**
 	 * Set the header-value separator character
+	 * @since 1.0.0
 	 */
 	public void setSeparator(String sep)
 	{
@@ -77,6 +91,7 @@ public class Settings
 	
 	/**
 	 * Returns the comment character
+	 * @since 1.0.0
 	 */
 	public String getCommentMarker()
 	{
@@ -85,6 +100,7 @@ public class Settings
 	
 	/**
 	 * Returns the separator marker
+	 * @since 1.0.0
 	 */
 	public String getSeparator()
 	{
@@ -94,6 +110,7 @@ public class Settings
 	/**
 	 * load the settings file
 	 * @throws FileNotFoundException 
+	 * @since 1.0.0
 	 */
 	public void loadFile() throws FileNotFoundException
 	{
@@ -113,6 +130,7 @@ public class Settings
 	/**
 	 * save the current settings to file
 	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public void saveToFile() throws IOException
 	{
@@ -135,6 +153,7 @@ public class Settings
 	
 	/**
 	 * insert a value into the settings collection
+	 * @since 1.0.0
 	 */
 	public void insert(String header, String value)
 	{
@@ -152,6 +171,7 @@ public class Settings
 
 	/**
 	 * returns the value associated with the given header
+	 * @since 1.0.0
 	 */
 	public String getValue(String header)
 	{

@@ -63,7 +63,7 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Set a filename for this {@code ByteFile} object.
 	 * @param name - the name of the file without an extension
 	 * @since 1.0.0
 	 */
@@ -73,7 +73,7 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Removes all bytes from the file array.
 	 * @since 1.0.0
 	 */
 	public void clear()
@@ -82,23 +82,29 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Append an array of bytes on the end of the existing byte array. 
+	 * @param data - the array to append
 	 * @since 1.0.0
 	 */
-	public void addBytes(byte[] d) 
+	public void addBytes(byte[] data) 
 	{
-		for (byte b : d)
+		for (byte b : data)
 		{
-			data.add(b);
+			this.data.add(b);
 		}
 	}
 	
 	/**
-	 * 
+	 * Append a subset of bytes from an array ranging from the offset for a given length.
+	 * @param chunk - the byte array to read from
+	 * @param offset - 
+	 * @param length - 
 	 * @since 1.0.0
 	 */
 	public void addBytes(byte[] chunk, int offset, int length) 
 	{
+		offset = (offset<0)?0:offset;
+		length = ((chunk.length-offset) >= length)?(chunk.length-offset-1):length;
 		for (int i=offset, l=offset+length; i<l; i++)
 		{
 			data.add( chunk[i] );

@@ -5,11 +5,24 @@
  */
 package com.nullpointerworks.util;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class Counter
 {
 	private Integer count = 0;
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public Counter() {}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public Counter(int v) 
 	{
 		synchronized(count)
@@ -18,6 +31,10 @@ public class Counter
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void increment()
 	{
 		synchronized(count)
@@ -26,6 +43,10 @@ public class Counter
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void decrement()
 	{
 		synchronized(count)
@@ -34,6 +55,10 @@ public class Counter
 		}
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public int value()
 	{
 		synchronized(count)

@@ -9,47 +9,83 @@ import com.nullpointerworks.util.Log;
 import com.nullpointerworks.util.file.Encoding;
 import com.nullpointerworks.util.pack.Array;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class TextFile
 {
 	private String encoding = Encoding.UTF16;
 	private String name = "";
 	private Array<String> lines;
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public TextFile()
 	{
 		lines = new Array<String>();
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void clear()
 	{
 		lines.clear();
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public String getEncoding() 
 	{
 		return encoding;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void setEncoding(String encoding) 
 	{
 		this.encoding = encoding;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public String getName() 
 	{
 		return name;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
-
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void addLine(String line)
 	{
 		lines.add(line);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public String getLine(int index)
 	{
 		if (index < 0 || index >= lines.size()) 
@@ -60,6 +96,10 @@ public class TextFile
 		return lines.get(index);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void setLine(int index, String line)
 	{
 		if (index < 0 || index >= lines.size()) 
@@ -70,11 +110,19 @@ public class TextFile
 		lines.set(index, line);
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public String[] getLines() 
 	{
 		return lines.toArray(new String[0]);
 	}
-
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public int getSize() 
 	{
 		return lines.size();

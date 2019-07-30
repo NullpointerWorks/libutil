@@ -18,11 +18,16 @@ import com.nullpointerworks.util.Log;
 import com.nullpointerworks.util.file.bytefile.ByteFile;
 import com.nullpointerworks.util.file.bytefile.ByteFileParser;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public class TextFileParser 
 {
 	/**
 	 * Save text file to disc. Set overwrite to true to delete and rewrite the file.
 	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public static boolean write(String path, TextFile file, boolean overwrite) throws IOException
 	{
@@ -33,6 +38,7 @@ public class TextFileParser
 	/**
 	 * Save text file to disc.
 	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public static boolean write(String path, TextFile file) throws IOException
 	{
@@ -42,6 +48,7 @@ public class TextFileParser
 	/**
 	 * Save the given array of strings to a file
 	 * @throws IOException 
+	 * @since 1.0.0
 	 */
 	public static boolean write(String path, String[] lines, final String encoding) throws IOException
 	{
@@ -87,6 +94,7 @@ public class TextFileParser
 	
 	/**
 	 * @throws FileNotFoundException 
+	 * @since 1.0.0
 	 */
 	public static TextFile file(String path) throws FileNotFoundException
 	{
@@ -94,9 +102,10 @@ public class TextFileParser
 	    final InputStream is = new DataInputStream(new FileInputStream(f));
 		return stream(is);
 	}
-
+	
 	/**
 	 * 
+	 * @since 1.0.0
 	 */
 	public static TextFile stream(InputStream is)
 	{
@@ -131,6 +140,7 @@ public class TextFileParser
 	
 	/**
 	 * Deletes the given file or directory. A directory must be empty before it can be deleted.
+	 * @since 1.0.0
 	 */
 	public static boolean delete(String path)
 	{
