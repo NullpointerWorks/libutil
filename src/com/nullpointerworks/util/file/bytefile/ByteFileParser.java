@@ -15,8 +15,9 @@ import java.io.InputStream;
 import com.nullpointerworks.util.Log;
 
 /**
- * 
+ * Contains static members to write and read a {@code ByteFile} object.
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class ByteFileParser 
 {

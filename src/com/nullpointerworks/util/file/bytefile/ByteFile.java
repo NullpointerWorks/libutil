@@ -14,6 +14,7 @@ import com.nullpointerworks.util.pattern.Nullable;
 /**
  * A byte array container to be used for reading and writing raw binary files. 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class ByteFile implements Nullable
 {
@@ -97,8 +98,8 @@ public class ByteFile implements Nullable
 	/**
 	 * Append a subset of bytes from an array ranging from the offset for a given length.
 	 * @param chunk - the byte array to read from
-	 * @param offset - 
-	 * @param length - 
+	 * @param offset - starting element in the array
+	 * @param length - amount of element to add from the start
 	 * @since 1.0.0
 	 */
 	public void addBytes(byte[] chunk, int offset, int length) 
@@ -112,7 +113,8 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Returns all the bytes stored in the file. The returned array is reference free.
+	 * @return all the bytes stored in the file
 	 * @since 1.0.0
 	 */
 	public byte[] getBytes()
@@ -127,16 +129,19 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Places a byte of data at the end of the file array.
+	 * @param data - he byte to place
 	 * @since 1.0.0
 	 */
-	public void addByte(byte d) 
+	public void addByte(byte data) 
 	{
-		data.add(d);
+		this.data.add(data);
 	}
 	
 	/**
-	 * 
+	 * Returns the byte in the data file at the given index. If the index is negative, or out of bounds, this method returns {@code 0}.
+	 * @param index - the data array index
+	 * @return the byte at the given index
 	 * @since 1.0.0
 	 */
 	public byte getByte(int index)
@@ -151,7 +156,8 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Returns a {@code ByteFileReader} to assist with reading its content.
+	 * @return a {@code ByteFileReader} to assist with reading
 	 * @since 1.0.0
 	 */
 	public ByteFileReader getReader()
@@ -160,7 +166,7 @@ public class ByteFile implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Clears and nulls the data array. After this method call no more data can be stored or read.
 	 * @since 1.0.0
 	 */
 	public void free() 

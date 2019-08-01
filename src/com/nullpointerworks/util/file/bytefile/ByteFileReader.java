@@ -10,6 +10,7 @@ import com.nullpointerworks.util.pattern.Nullable;
 /**
  * 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class ByteFileReader implements Nullable 
 {
@@ -93,7 +94,7 @@ public class ByteFileReader implements Nullable
 	 */
 	public byte getByte() throws EndOfFileException
 	{
-		if (stride >= size) throw new EndOfFileException( size - stride );
+		if (stride >= size) throw new EndOfFileException(size - stride);
 		return file.getByte(stride++);
 	}
 	
@@ -103,7 +104,7 @@ public class ByteFileReader implements Nullable
 	 */
 	public short getShort() throws EndOfFileException
 	{
-		if ((stride+1) >= size) throw new EndOfFileException( size - (stride+1) );
+		if ((stride+1) >= size) throw new EndOfFileException(size - stride);
 		byte b1 = getByte();
 		byte b2 = getByte();
 		return toShort(b1,b2);
@@ -115,7 +116,7 @@ public class ByteFileReader implements Nullable
 	 */
 	public int getInteger() throws EndOfFileException
 	{
-		if ((stride+3) >= size) throw new EndOfFileException(size - (stride+3));
+		if ((stride+3) >= size) throw new EndOfFileException(size - stride);
 		byte b1 = getByte();
 		byte b2 = getByte();
 		byte b3 = getByte();
@@ -129,7 +130,7 @@ public class ByteFileReader implements Nullable
 	 */
 	public long getLong() throws EndOfFileException
 	{
-		if ((stride+7) >= size) throw new EndOfFileException(size - (stride+7));
+		if ((stride+7) >= size) throw new EndOfFileException(size - stride);
 		byte b1 = getByte();
 		byte b2 = getByte();
 		byte b3 = getByte();
