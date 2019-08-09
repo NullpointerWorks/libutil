@@ -26,6 +26,7 @@ public class ByteFileReader implements Nullable
 	
 	/**
 	 * 
+	 * @param 
 	 * @since 1.0.0
 	 */
 	public ByteFileReader(ByteFile file)
@@ -35,6 +36,7 @@ public class ByteFileReader implements Nullable
 	
 	/**
 	 * 
+	 * @param 
 	 * @since 1.0.0
 	 */
 	public void setFile(ByteFile file)
@@ -73,6 +75,7 @@ public class ByteFileReader implements Nullable
 	
 	/**
 	 * 
+	 * @param 
 	 * @since 1.0.0
 	 */
 	public byte[] getBytes(int amount) throws EndOfFileException

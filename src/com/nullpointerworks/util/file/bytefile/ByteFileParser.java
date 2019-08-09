@@ -22,8 +22,10 @@ import com.nullpointerworks.util.Log;
 public class ByteFileParser 
 {
 	/**
-	 * 
-	 * @throws IOException 
+	 * Write the content of the given {@code ByteFile} to local storage.
+	 * @param path - the path to write to
+	 * @param file - the {@code ByteFile} object to write
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
 	public static void write(String path, ByteFile file) throws IOException
@@ -32,21 +34,23 @@ public class ByteFileParser
 	}
 	
 	/**
-	 * 
-	 * @throws IOException 
+	 * Write the content of the given {@code byte[]} to local storage.
+	 * @param path - the path to write to
+	 * @param data - the {@code byte[]} to write
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
 	public static void write(String path, byte[] data) throws IOException
 	{
 		if (path == null)
 		{
-			Log.err("NullPointer: The given path string is null");
+			Log.err("ByteFileParser nullpointer: The given path string is null");
 			return;
 		}
 		
 		if (data == null)
 		{
-			Log.err("NullPointer: The data provided points to null");
+			Log.err("ByteFileParser nullpointer: The data provided points to null");
 			return;
 		}
 		
@@ -58,15 +62,17 @@ public class ByteFileParser
 	}
 	
 	/**
-	 * 
-	 * @throws IOException 
+	 * Load the bytes of a file at the specified path into a {@code ByteFile} object.
+	 * @param path - the path to the file
+	 * @return a {@code ByteFile} with the file content
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
 	public static ByteFile file(String path) throws IOException
 	{
 		if (path==null)
 		{
-			Log.err("NullPointer: The given path string is null");
+			Log.err("ByteFileParser nullpointer: The given path string is null");
 			return new ByteFile();
 		}
 		final File f = new File(path);
@@ -75,15 +81,17 @@ public class ByteFileParser
 	}
 	
 	/**
-	 * 
-	 * @throws IOException 
+	 * Load the bytes of a file from the given {@code InputStream} into a {@code ByteFile} object.
+	 * @param is - the {@code InputStream} to read from
+	 * @return a {@code ByteFile object with the content of the stream
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
 	public static ByteFile stream(InputStream is) throws IOException
 	{
 		if (is==null)
 		{
-			Log.err("NullPointer: The inputstream is null");
+			Log.err("ByteFileParser nullpointer: The inputstream is null");
 			return new ByteFile();
 		}
 		
