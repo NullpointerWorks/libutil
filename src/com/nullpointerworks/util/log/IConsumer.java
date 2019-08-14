@@ -5,7 +5,16 @@
  */
 package com.nullpointerworks.util.log;
 
+/**
+ * 
+ * @author Michiel Drost - Nullpointer Works
+ * @since 1.0.0
+ */
 public interface IConsumer 
-{        
+{
+    /**
+     * 
+     * @since 1.0.0
+     */   
     public void appendText(String text);
 }

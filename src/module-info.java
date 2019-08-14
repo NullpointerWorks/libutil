@@ -18,8 +18,7 @@ module libnpw.util
 	exports com.nullpointerworks.util.threading.event;
 	exports com.nullpointerworks.util.threading.pool;
 	exports com.nullpointerworks.util.timing;
-
-	exports exp.nullpointerworks.util;
+	
 	exports exp.nullpointerworks.util.classloader;
 	exports exp.nullpointerworks.util.file;
 }
