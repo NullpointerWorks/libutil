@@ -15,9 +15,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * 
+ * @author Michiel Drost - Nullpointer Works
+ * @since 1.0.0
+ */
 public class Console implements IConsumer 
 {
 	private static Console instance=null;
+    
+    /**
+     * 
+     * @since 1.0.0
+     */
 	public static Console getInstance()
 	{
 		if (instance==null) instance = new Console();
@@ -28,7 +38,11 @@ public class Console implements IConsumer
 	private JTextArea output;
 	private static Color BACKGROUND = new Color(0.2f,0.2f,0.2f,1.0f);
 	private static Color FOREGROUND = new Color(0.9f,0.9f,0.9f,1.0f);
-	
+    
+    /**
+     * 
+     * @since 1.0.0
+     */
     public Console() 
     {
     	panel = new JPanel();
@@ -47,6 +61,7 @@ public class Console implements IConsumer
     
     /**
      * 
+     * @since 1.0.0
      */
     public JPanel getInterface()
     {
@@ -55,6 +70,7 @@ public class Console implements IConsumer
     
     /**
      * 
+     * @since 1.0.0
      */
     @Override
     public void appendText(final String text) 
@@ -77,9 +93,6 @@ public class Console implements IConsumer
         }
     }
     
-    /**
-     * 
-     */
 	private void setLooks()
 	{
 		output.setBackground( BACKGROUND );

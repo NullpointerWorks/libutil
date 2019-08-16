@@ -13,10 +13,17 @@ import java.io.IOException;
 
 import com.nullpointerworks.util.Log;
 
+/**
+ * Contains a few methods for placing data into, and from the clipboard.
+ * @author Michiel Drost - Nullpointer Works
+ * @since 1.0.0
+ */
 public class Clipboard 
 {
 	/**
-	 * retrieves a string of text from the clipboard
+	 * Retrieves a string of text from the system's clipboard.
+	 * @return a string of text from the system's clipboard
+	 * @since 1.0.0
 	 */
 	public static String getString()
 	{
@@ -39,11 +46,13 @@ public class Clipboard
 	}
 	
 	/**
-	 * paste a string into the system's clipboard
+	 * Places a string of text into the system's clipboard.
+	 * @param string - the string to place into the clipboard
+	 * @since 1.0.0
 	 */
-	public static void setString(String text)
+	public static void setString(String string)
 	{
-		StringSelection s = new StringSelection(text);
+		StringSelection s = new StringSelection(string);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		java.awt.datatransfer.Clipboard cb = toolkit.getSystemClipboard();
 	    cb.setContents(s, s);
