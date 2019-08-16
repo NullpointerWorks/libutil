@@ -106,47 +106,6 @@ public class StringUtil
 	}
 	
 	/**
-	 * Swap the extension of the given string with another.
-	 * @since 1.0.0
-	 */
-	public static String swapExtension(String fileName, String newExt) 
-	{
-		String[] tok = fileName.split("\\.");
-		String res = StringUtil.compile(tok, ".", 0, tok.length-1);
-		return addFileExtension(res, newExt);
-	}
-	
-	/**
-	 * Parses a file extension behind the given text if there is no file extension added.
-	 * @since 1.0.0
-	 */
-	public static String getFileExtension(String str)
-	{
-		String[] tokens = str.split("\\.");
-		String text = tokens[tokens.length-1];
-		return text;
-	}
-	
-	/**
-	 * Parses a file extension behind the given text if there is no file extension added.
-	 * @since 1.0.0
-	 */
-	public static String addFileExtension(String text, String pend)
-	{
-		if (text.endsWith("."))
-		{
-			text = text+pend;
-		}
-		
-		if (!text.endsWith( "."+pend ))
-		{
-			text = text+"."+pend;
-		}
-		
-		return text;
-	}
-	
-	/**
 	 * Replaces string representation of the given integer from the back of the given string.
 	 * @since 1.0.0
 	 */

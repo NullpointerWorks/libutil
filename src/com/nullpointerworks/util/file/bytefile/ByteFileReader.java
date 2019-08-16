@@ -5,28 +5,20 @@
  */
 package com.nullpointerworks.util.file.bytefile;
 
-import com.nullpointerworks.util.pattern.Nullable;
-
 /**
  * 
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
-public class ByteFileReader implements Nullable 
+public class ByteFileReader
 {
 	private ByteFile file = null;
 	private int stride = 0;
 	private int size = 0;
 	
 	/**
-	 * 
-	 * @since 1.0.0
-	 */
-	public ByteFileReader() { }
-	
-	/**
-	 * 
-	 * @param 
+	 * Creates a new {@code ByteFileReader} object that scans the data in the given {@code ByteFile} object.
+	 * @param file - the {@code ByteFile} to read
 	 * @since 1.0.0
 	 */
 	public ByteFileReader(ByteFile file)
@@ -35,19 +27,19 @@ public class ByteFileReader implements Nullable
 	}
 	
 	/**
-	 * 
-	 * @param 
+	 * Make the {@code ByteFileReader} object that scans the data in the given {@code ByteFile} object.
+	 * @param file - the {@code ByteFile} to read
 	 * @since 1.0.0
 	 */
 	public void setFile(ByteFile file)
 	{
-		isNull(false);
+		resetStride();
 		this.file=file;
 		size = file.getBytes().length;
 	}
 	
 	/**
-	 * 
+	 * Resets the scan marker back to the beginning.
 	 * @since 1.0.0
 	 */
 	public void resetStride()
@@ -56,7 +48,8 @@ public class ByteFileReader implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Returns the current length of the scanning stride.
+	 * @return the current length of the scanning stride
 	 * @since 1.0.0
 	 */
 	public int getStride()
@@ -65,7 +58,8 @@ public class ByteFileReader implements Nullable
 	}
 	
 	/**
-	 * 
+	 * Returns the total length of the {@code ByteFile} object that's being read.
+	 * @return the total length of the {@code ByteFile} object that's being read
 	 * @since 1.0.0
 	 */
 	public int getSize()
@@ -178,11 +172,4 @@ public class ByteFileReader implements Nullable
 	{
 		return (long)( a<<56 | b<<48 | c<<40 | d<<32 | e<<24 | f<<16 | g<<8 | h );
 	}
-	
-	private boolean isnull = true;
-	@Override
-	public boolean isNull() {return isnull;}
-	
-	@Override
-	public void isNull(boolean n) {isnull=n;}
 }

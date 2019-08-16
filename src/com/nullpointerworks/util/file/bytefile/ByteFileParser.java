@@ -81,7 +81,7 @@ public class ByteFileParser
 	}
 	
 	/**
-	 * Load the bytes of a file from the given {@code InputStream} into a {@code ByteFile} object.
+	 * Load the bytes of a file from the given {@code InputStream} into a {@code ByteFile} object. This method reads byte-for-byte to get the highest reading accuracy. 
 	 * @param is - the {@code InputStream} to read from
 	 * @return a {@code ByteFile object with the content of the stream
 	 * @throws IOException if an I/O error occurs
@@ -96,11 +96,11 @@ public class ByteFileParser
 		}
 		
 		ByteFile bf = new ByteFile();
-		byte[] byteChunk = new byte[4096];
 		int n;
-		while ( (n = is.read(byteChunk)) > 0 )
+		
+		while ( (n=is.read()) >= 0 )
 		{
-			bf.addBytes(byteChunk, 0, n);
+			bf.addByte( (byte)(n&0xff) );
 		}
 		
 		if (is != null) 

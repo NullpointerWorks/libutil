@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nullpointerworks.util.Log;
-import com.nullpointerworks.util.pattern.Nullable;
 
 /**
  * A byte array container to be used for reading and writing raw binary files. 
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
-public class ByteFile implements Nullable
+public class ByteFile
 {
 	private List<Byte> data;
 	private String name = "";
@@ -173,11 +172,5 @@ public class ByteFile implements Nullable
 	{
 		data.clear();
 		data=null;
-	}
-	
-	@Override
-	public boolean isNull()
-	{
-		return data.size() < 1;
 	}
 }

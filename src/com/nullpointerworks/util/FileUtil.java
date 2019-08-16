@@ -14,6 +14,7 @@ import java.io.OutputStream;
 
 /**
  * 
+ * @author Michiel Drost - Nullpointer Works
  * @since 1.0.0
  */
 public class FileUtil 
@@ -145,5 +146,47 @@ public class FileUtil
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	/**
+	 * Swap the extension of the given string with another.
+	 * @since 1.0.0
+	 */
+	public static String swapExtension(String fileName, String newExt) 
+	{
+		String[] tok = fileName.split("\\.");
+		String res = StringUtil.compile(tok, ".", 0, tok.length-1);
+		return addFileExtension(res, newExt);
+	}
+	
+	/**
+	 * Parses a file extension behind the given text if there is no file extension added.
+	 * @since 1.0.0
+	 */
+	public static String getFileExtension(String str)
+	{
+		String[] tokens = str.split("\\.");
+		if (tokens.length < 2) return null;
+		String text = tokens[tokens.length-1];
+		return text;
+	}
+	
+	/**
+	 * Parses a file extension behind the given text if there is no file extension added.
+	 * @since 1.0.0
+	 */
+	public static String addFileExtension(String text, String pend)
+	{
+		if (text.endsWith("."))
+		{
+			text = text+pend;
+		}
+		
+		if (!text.endsWith( "."+pend ))
+		{
+			text = text+"."+pend;
+		}
+		
+		return text;
 	}
 }
