@@ -28,21 +28,13 @@ public class ClassManager
 	private static ClassManager inst = null;
 	
 	/**
+	 * 
 	 * @since 1.0.0
 	 */
 	public static ClassManager getInstance()
 	{
 		if (inst == null) inst = new ClassManager();
 		return inst;
-	}
-	
-	/**
-	 * @since 1.0.0
-	 */
-	public static Class<?> forName(String classname) 
-			throws ClassNotFoundException 
-	{
-		return getInstance().findClass(classname);
 	}
 	
 	// =============================================================
@@ -55,9 +47,13 @@ public class ClassManager
 	}
 	
 	/**
+	 * Returns the {@code Class} object associated with the class or interface with the given string name.
+	 * @param classname - the fully qualified name of the desired class.
+     * @return the {@code Class} object for the class with the specified name.
 	 * @since 1.0.0
+	 * @see Class
 	 */
-	public Class<?> findClass(String classname) 
+	public Class<?> forName(String classname) 
 			throws ClassNotFoundException
 	{
 		if (loaded.containsKey(classname))	
@@ -71,6 +67,7 @@ public class ClassManager
 	}
 	
 	/**
+	 * 
 	 * @since 1.0.0
 	 */
 	public List<Class<?>> findClassBySuperClass(Class<?> superclass)
@@ -90,6 +87,7 @@ public class ClassManager
 	}
 	
 	/**
+	 * 
 	 * @since 1.0.0
 	 */
 	public void loadJavaArchive(String pathToJar) 
