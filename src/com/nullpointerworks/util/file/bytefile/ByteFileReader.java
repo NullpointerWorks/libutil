@@ -6,7 +6,7 @@
 package com.nullpointerworks.util.file.bytefile;
 
 /**
- * 
+ * A wrapper class to help read the bytes over an 8-bit file.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */

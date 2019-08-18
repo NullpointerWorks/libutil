@@ -6,7 +6,7 @@
 package com.nullpointerworks.util.concurrent;
 
 /**
- * This class is meant to help count in multi-threaded environments. It's a simple integer counter with all concurrent methods.
+ * This class is meant to help count for multi-threaded environments. It's a simple integer counter with which all methods are synchronized to its internal state.
  * @author Michiel Drost - Nullpointer Works
  * @since 1.0.0
  */

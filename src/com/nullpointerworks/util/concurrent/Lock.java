@@ -6,7 +6,7 @@
 package com.nullpointerworks.util.concurrent;
 
 /**
- * 
+ * This class is meant to help as a boolean lock for multi-threaded environments. It's a simple boolean switch with which all methods are synchronized to its internal state.
  * @since 1.0.0
  */
 public class Lock 
@@ -14,13 +14,14 @@ public class Lock
 	private Boolean locked = false;
 	
 	/**
-	 * 
+	 * Creates a concurrent lock defaulted to {@code false}.
 	 * @since 1.0.0
 	 */
 	public Lock() {}
 	
 	/**
-	 * 
+	 * Creates a concurrent lock set to the given state.
+	 * @param l - the initial lock state
 	 * @since 1.0.0
 	 */
 	public Lock(boolean l) 
@@ -29,7 +30,7 @@ public class Lock
 	}
 	
 	/**
-	 * 
+	 * Locks the state.
 	 * @since 1.0.0
 	 */
 	public void lock() 
@@ -41,7 +42,7 @@ public class Lock
 	}
 	
 	/**
-	 * 
+	 * Unlocks the state.
 	 * @since 1.0.0
 	 */
 	public void unlock() 
@@ -53,7 +54,8 @@ public class Lock
 	}
 	
 	/**
-	 * 
+	 * Sets the state to the given boolean.
+	 * @param l - the state to set to
 	 * @since 1.0.0
 	 */
 	public void setLock(boolean l) 
@@ -65,7 +67,8 @@ public class Lock
 	}
 	
 	/**
-	 * 
+	 * Returns the state of the lock.
+	 * @return the state of the lock
 	 * @since 1.0.0
 	 */
 	public boolean isLocked() 
