@@ -68,8 +68,10 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
-	 * @param 
+	 * Parses a number of available bytes in the {@code ByteFile} and returns it as an primitive-type array. The bytes returned are counted from the position of the reading stride. 
+	 * @param amount - the amount of bytes to read
+	 * @return an array of bytes read from the {@code ByteFile}
+	 * @throws EndOfFileException when the end of the file has been reached before the end of this method
 	 * @since 1.0.0
 	 */
 	public byte[] getBytes(int amount) throws EndOfFileException
@@ -86,7 +88,9 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
+	 * Returns the next byte to be read from the {@code ByteFile}.
+	 * @return the next byte to be read from the {@code ByteFile}
+	 * @throws EndOfFileException when the end of the file has been reached before the end of this method
 	 * @since 1.0.0
 	 */
 	public byte getByte() throws EndOfFileException
@@ -96,7 +100,9 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
+	 * Returns the next two bytes to be read from the {@code ByteFile} as a {@code short} primitive type.
+	 * @return the next two bytes to be read from the {@code ByteFile} as a {@code short} primitive type
+	 * @throws EndOfFileException when the end of the file has been reached before the end of this method
 	 * @since 1.0.0
 	 */
 	public short getShort() throws EndOfFileException
@@ -108,7 +114,9 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
+	 * Returns the next two bytes to be read from the {@code ByteFile} as a {@code integer} primitive type.
+	 * @return the next two bytes to be read from the {@code ByteFile} as a {@code integer} primitive type
+	 * @throws EndOfFileException when the end of the file has been reached before the end of this method
 	 * @since 1.0.0
 	 */
 	public int getInteger() throws EndOfFileException
@@ -122,7 +130,9 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
+	 * Returns the next two bytes to be read from the {@code ByteFile} as a {@code long} primitive type.
+	 * @return the next two bytes to be read from the {@code ByteFile} as a {@code long} primitive type
+	 * @throws EndOfFileException when the end of the file has been reached before the end of this method
 	 * @since 1.0.0
 	 */
 	public long getLong() throws EndOfFileException
@@ -140,7 +150,8 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
+	 * Returns {@code true} of the reading stride has reached the end of the file.
+	 * @return {@code true} of the reading stride has reached the end of the file
 	 * @since 1.0.0
 	 */
 	public boolean reachedEOF()
@@ -149,7 +160,7 @@ public class ByteFileReader
 	}
 	
 	/**
-	 * 
+	 * Clears the {@code ByteFile} content and removes its reference from this {@code ByteFileReader} object.
 	 * @since 1.0.0
 	 */
 	public void free()

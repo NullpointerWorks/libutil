@@ -10,8 +10,9 @@ import com.nullpointerworks.util.file.Encoding;
 import com.nullpointerworks.util.pack.Array;
 
 /**
- * 
+ * A text file consisting of a list of String objects that represent each line of text.
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class TextFile
 {

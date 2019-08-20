@@ -21,6 +21,7 @@ import com.nullpointerworks.util.file.bytefile.ByteFileParser;
 /**
  * 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class TextFileParser 
 {

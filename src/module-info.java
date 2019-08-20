@@ -6,6 +6,7 @@ module libnpw.util
 {
 	requires transitive java.desktop;
 	exports com.nullpointerworks.util;
+	exports com.nullpointerworks.util.concurrent;
 	exports com.nullpointerworks.util.file;
 	exports com.nullpointerworks.util.file.bytefile;
 	exports com.nullpointerworks.util.file.textfile;
