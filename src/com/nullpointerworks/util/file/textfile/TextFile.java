@@ -21,7 +21,7 @@ public class TextFile
 	private Array<String> lines;
 	
 	/**
-	 * 
+	 * Creates an empty {@code TextFile} with UTF-16 encoding.
 	 * @since 1.0.0
 	 */
 	public TextFile()
@@ -30,12 +30,15 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Creates an empty {@code TextFile} with the specified encoding.
+	 * @param encoding - the encoding string, like {@code "UTF-8"}, {@code "UTF-16"}, etc
 	 * @since 1.0.0
+	 * @see Encoding
 	 */
-	public void clear()
+	public TextFile(final String encoding)
 	{
-		lines.clear();
+		this();
+		setEncoding(encoding);
 	}
 	
 	/**
@@ -127,5 +130,25 @@ public class TextFile
 	public int getSize() 
 	{
 		return lines.size();
+	}
+	
+	/**
+	 * Removes all lines of text from the {@code TextFile}.
+	 * @since 1.0.0
+	 */
+	public void clear()
+	{
+		lines.clear();
+	}
+	
+	/**
+	 * Frees all allocated memory for garbage collection and making this object unusable.
+	 * @since 1.0.0
+	 */
+	public void free()
+	{
+		clear();
+		name = null;
+		encoding = null;
 	}
 }

@@ -3,7 +3,7 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.concurrent;
+package com.nullpointerworks.util.concurrency;
 
 /**
  * This class is meant to help as a boolean lock for multi-threaded environments. It's a simple boolean switch with which all methods are synchronized to its internal state.
