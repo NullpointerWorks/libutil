@@ -42,7 +42,8 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Returns the encoding string.
+	 * @return the encoding string
 	 * @since 1.0.0
 	 */
 	public String getEncoding() 
@@ -51,8 +52,10 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Set the file encoding when writing to disc is desired. The JVM default encoding is {@code "UTF-16"}.
+	 * @param encoding - the encoding string, like {@code "UTF-8"}, {@code "UTF-16"}, etc
 	 * @since 1.0.0
+	 * @see Encoding
 	 */
 	public void setEncoding(String encoding) 
 	{
