@@ -63,7 +63,8 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Returns the name of the file if available.
+	 * @return the name of the file if available
 	 * @since 1.0.0
 	 */
 	public String getName() 
