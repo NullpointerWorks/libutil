@@ -7,168 +7,125 @@ package com.nullpointerworks.util.pack.node;
 
 import java.util.Vector;
 
-import com.nullpointerworks.util.pattern.IIterator;
+import com.nullpointerworks.util.pattern.Iterator;
 
-public class Node<DataType>
+/**
+ * The {@code Node<T>} object acts like an item in a folder/tree structure. It may have a value associated with it, or another list of node branches. All nodes have a name that specifies its location in the node tree, and a value object of the template class {@code T}.
+ * @author Michiel Drost - Nullpointer Works
+ * @since 1.0.0
+ */
+public class Node<T>
 {
-	
-	/**
-	 **/
-	public void setPrinter(Printer<String,DataType> p)
-	{ 
-		printer = p; 
-	}
-
-	/**
-	 **/
-	public void printContent()
-	{
-		if (!nodes.isEmpty())
-		{
-			for (Node<DataType> n : nodes)
-			{
-				n.setPrinter(printer);
-				n.printContent( n.getName() );
-			}
-			return;
-		}
-		
-		if (name!=null)
-		{
-			if (nodeValue!=null)
-				printer.onPrint(name, nodeValue);
-		}	
-	}
-	
-	/**
-	 **/
-	private void printContent(String prefix)
-	{
-		if (!nodes.isEmpty())
-		{	
-			for (Node<DataType> n : nodes)
-			{
-				n.setPrinter(printer);
-				n.printContent(prefix + "/" + n.getName());
-			}
-			return;
-		}
-		
-		if (name!=null)
-		{
-			if (nodeValue!=null)
-				printer.onPrint(prefix, nodeValue);
-		}
-	}
-	
-	// ------------------------------------------------------
-	// ------------------------------------------------------
-	
+	private String seperator = "/";
+	private T nodeValue=null;
 	private String name=null;
-	private DataType nodeValue=null;
-	private Vector<Node<DataType>> nodes=null;
-	private Validation<DataType> validCheck = new Validation<DataType>()
+	private Vector<Node<T>> nodes=null;
+	private NodeValidation<T> validCheck = new NodeValidation<T>()
 	{
-		public boolean isValid(DataType input)
+		@Override
+		public boolean isValid(T input)
 		{
-			if (input!=null)
-				return true;
+			if (input!=null) return true;
 			return false;
 		}
 	};
-	private Printer<String,DataType> printer = new Printer<String,DataType>()
-	{
-		public void onPrint(String name,DataType value)
-		{
-			System.out.println(name+" "+value);
-		}
-	};
 	
-	// ------------------------------------------------------
-	// ------------------------------------------------------
-
 	/**
-	 **/
-	private Node<DataType> createPath(Vector<String> path, DataType value, Validation<DataType> valid)
-	{
-		if (path.size()<1)
-		{
-			if (validCheck==null) this.validCheck=valid;
-			if(!validCheck.isValid(value)) return this;
-			makeNode(name,value,valid);
-			return this;
-		}
-		
-		String thisNode = path.get(0);
-		for (Node<DataType> n : nodes)
-		{
-			if (n.getName().equals(thisNode))
-			{
-				path.remove(0);
-				n.createPath(path , value, valid);
-				return this;
-			}
-		}
-		nodes.add( new Node<DataType>(path, value, valid) );
-		return this;
+	 * Null constructor. Don't use unless you know what you're doing.
+	 * @since 1.0.0
+	 */
+	public Node() { }
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node(String name)
+	{ 
+		makeNode(name,null,null); 
 	}
 	
-	// ------------------------------------------------------
-	// ------------------------------------------------------
-
 	/**
-	 **/
-	public DataType findValue(int index)
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node(String name, T value)
+	{ 
+		makeNode(name,value,null); 
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node(String name, T value, NodeValidation<T> valid)
+	{ 
+		makeNode(name,value,valid); 
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public T findValue(int index)
 	{
 		if (index>=size()||index<0) return null;
 		return nodes.get(index).getValue();
 	}
 	
 	/**
-	 * Find a value using a given path. The default seperator is '/'.<br>
-	 * Use 'findValue(String path, String seperator)' to use a custom seperator
+	 * Find a value using a given path. The default separator is '/'.<br>
+	 * Use 'findValue(String path, String separator)' to use a custom separator
+	 * @since 1.0.0
 	 */
-	public DataType findValue(String path)
+	public T findValue(String path)
 	{
-		return findValue(path,"/");
+		return findValue(path,seperator);
 	}
 
 	/**
-	 **/
-	public DataType findValue(String path, String seperator)
+	 * 
+	 * @since 1.0.0
+	 */
+	public T findValue(String path, String seperator)
 	{
 		return findValue( makeVectorPath(path, seperator) );
 	}
 
-	/**Find a child node using an index or path.
-	 **/
-	public Node<DataType> findNode(int index)
+	/**
+	 * Find a child node using an index or path.
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(int index)
 	{
 		if (index>=size()||index<0)
-			return new Node<DataType>();
+			return new Node<T>();
 		return nodes.get(index);
 	}
 
 	/**
-	 **/
-	public Node<DataType> findNode(String path)
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(String path)
 	{
-		return findNode( makeVectorPath(path, "/") );
+		return findNode( makeVectorPath(path, seperator) );
 	}
 
 	/**
-	 **/
-	public Node<DataType> findNode(String path, String seperator)
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(String path, String seperator)
 	{
 		return findNode( makeVectorPath(path, seperator) );
 	}
 	
 	/**
-	 * Find a value using a path in the form of a Vector. Each element is a segment<br>
-	 * of the absolute path to the item. Example: root/folder/anotherFolder/myValue<br>
-	 * where myValue is the target value, not a folder.
+	 * Find a value using a path in the form of a Vector. Each element is a segment of the absolute path to the item. Example: root/folder/anotherFolder/myValue where myValue is the target value, not a folder.
+	 * @since 1.0.0
 	 */
-	public DataType findValue(Vector<String> path)
+	public T findValue(Vector<String> path)
 	{
 		if (path.size()<1)
 		{
@@ -177,7 +134,7 @@ public class Node<DataType>
 		
 		String nextNode = path.get(0);
 		path.remove(0);
-		for (Node<DataType> n : nodes)
+		for (Node<T> n : nodes)
 		{
 			if (n.getName().equals(nextNode))
 			{
@@ -188,8 +145,10 @@ public class Node<DataType>
 	}
 
 	/**
-	 **/
-	public Node<DataType> findNode(Vector<String> path)
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(Vector<String> path)
 	{
 		if (path.size()<1)
 		{
@@ -199,7 +158,7 @@ public class Node<DataType>
 		String nextNode = path.get(0);
 		path.remove(0);
 		
-		for (Node<DataType> n : nodes)
+		for (Node<T> n : nodes)
 		{
 			if (n.getName().equals(nextNode))
 			{
@@ -207,88 +166,78 @@ public class Node<DataType>
 			}
 		}
 		
-		return nullNode();
+		return new Node<T>();
 	}
 	
-	// ------------------------------------------------------
-	// ------------------------------------------------------
-	
 	/**
-	 * Null constructor. Don't use unless you know what you're doing.<br>
-	 * Pass a name for the root node.<br>
-	 * For example: new Node< String >("root");
-	 * @warning
-	 */
-	public Node() { }
-
-	/**
-	 **/
-	public Node<DataType> nullNode()
-	{
-		return new Node<DataType>()
-		{
-			public boolean isNull() 
-				{ return true; }
-		};
-	}
-
-	/**
-	 **/
-	public Node(String name)
-	{ 
-		makeNode(name,null,null); 
-	}
-
-	/**
-	 **/
-	public Node(String name, DataType value)
-	{ 
-		makeNode(name,value,null); 
-	}
-
-	/**
-	 **/
-	public Node(String name, DataType value, Validation<DataType> valid)
-	{ 
-		makeNode(name,value,valid); 
-	}
-
-	/**Add a path to a child node with a given value. Returns the absolute 
+	 * Add a path to a child node with a given value. Returns the absolute 
 	 * parent node so you can chain multiple creatPath() together.<br>
 	 * Example: root.createPath("first",1).createPath("second",2).createPath("third",3)<br>
 	 * <br>
 	 * createPath(String, C) accepts a third optional parameter which is the Validation class.<br>
 	 * Validation allows values to be set if they pass validation and are otherwise discarded.
+	 * @since 1.0.0
 	 **/
-	public Node<DataType> createPath(String path, DataType value)
+	public Node<T> createPath(String path, T value)
 	{
 		createPath(path, value, validCheck);
 		return this;
 	}
 
-	/**Add a path to a child node with a given value. Returns the absolute 
+	/**
+	 * Add a path to a child node with a given value. Returns the absolute 
 	 * parent node so you can chain multiple creatPath() together.<br>
 	 * Example: root.createPath("first",1).createPath("second",2).createPath("third",3)<br>
 	 * <br>
 	 * Using the default Validation class checks if a value is null and discards the input if true.
+	 * @since 1.0.0
 	 **/
-	public Node<DataType> createPath(String path, DataType value, Validation<DataType> valid)
+	public Node<T> createPath(String path, T value, NodeValidation<T> valid)
 	{
-		createPath( makeVectorPath(path,"/") , value, valid);
+		createPath( makeVectorPath(path,seperator) , value, valid);
 		return this;
 	}
 
 	/**
-	 **/
-	public Node(Vector<String> path, DataType value, Validation<DataType> valid)
+	 * @since 1.0.0
+	 */
+	public Node(Vector<String> path, T value, NodeValidation<T> valid)
 	{
 		makeNode(path.get(0),null,valid);
 		path.remove(0);
 		createPath(path,value,valid);
 	}
+	
+	/*
+	 * @since 1.0.0
+	 */
+	private Node<T> createPath(Vector<String> path, T value, NodeValidation<T> valid)
+	{
+		if (path.size()<1)
+		{
+			if (validCheck==null) this.validCheck=valid;
+			if(!validCheck.isValid(value)) return this;
+			makeNode(name,value,valid);
+			return this;
+		}
+		
+		String thisNode = path.get(0);
+		for (Node<T> n : nodes)
+		{
+			if (n.getName().equals(thisNode))
+			{
+				path.remove(0);
+				n.createPath(path , value, valid);
+				return this;
+			}
+		}
+		nodes.add( new Node<T>(path, value, valid) );
+		return this;
+	}
 
 	/**
-	 **/
+	 * @since 1.0.0
+	 */
 	private Vector<String> makeVectorPath(String path, String sep)
 	{
 		String[] tokens = path.split(sep);
@@ -299,61 +248,85 @@ public class Node<DataType>
 	}
 	
 	/**
-	 * Makes a node endpoint
+	 * Makes a node end point
+	 * @since 1.0.0
 	 */
-	private void makeNode(String name, DataType value, Validation<DataType> valid)
+	private void makeNode(String name, T value, NodeValidation<T> valid)
 	{
-		nodes = new Vector<Node<DataType>>();
+		nodes = new Vector<Node<T>>();
 		this.name = name;
 		if (valid!=null) this.validCheck = valid;
 		this.setValue(value);
 	}
 	
-	// ------------------------------------------------------
-	// ------------------------------------------------------
-	
-	/**Returns the node's content as a string representation.
-	 **/
-	@Override
-	public String toString()
-	{
-		return 	"Node:"+getName()+
-				" - contains "+this.size()+" nodes"+
-				" - value:"+getValue().toString();
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public String getName() 
+	{ 
+		return name; 
+	}
+
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public T getValue()
+	{ 
+		return nodeValue; 
+	}
+
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public void setValue(T value) 
+	{ 
+		nodeValue = value; 
 	}
 	
 	/**
-	 **/
-	public String getName() 
-	{ return name; }
-
-	/**
-	 **/
-	public DataType getValue()
-	{ return nodeValue; }
-
-	/**
-	 **/
-	public void setValue(DataType value) 
-	{ nodeValue = value; }
+	 * 
+	 * @since 1.0.0
+	 */
+	public void setFolderMarker(String mark)
+	{
+		seperator = mark;
+	}
 	
-	/**Returns the number of Nodes stored.
-	 **/
-	public synchronized int size()
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public String getFolderMarker()
+	{
+		return seperator;
+	}
+	
+	/**
+	 * Returns the number of Nodes stored.
+	 * @since 1.0.0
+	 */
+	public int size()
 	{
 		if (isNull()) return 0;
 		return nodes.size(); 
 	}
 	
-	/**Returns true if the node has no child nodes.
-	 **/
+	/**
+	 * Returns true if the node has no child nodes.
+	 * @since 1.0.0
+	 */
 	public boolean isEmpty()
 	{ 
 		return (size()==0)?true:false; 
 	}
 	
-	/**Returns true if either the name, nodes or validation is null
-	 **/
+	/**
+	 * Returns true if either the name, nodes or validation is null
+	 * @since 1.0.0
+	 */
 	public boolean isNull()
 	{
 		if (name==null) return true;
@@ -365,55 +338,18 @@ public class Node<DataType>
 			}
 			else
 			{
-				if (validCheck==null)
-					return true;
+				if (validCheck==null) return true;
 			}
 		}
 		return false;
 	}
 	
 	/**
-	 **/
-	public NodeIterator getIterator()
+	 * 
+	 * @since 1.0.0
+	 */
+	public Iterator<Node<T>> getIterator()
 	{
-		return new NodeIterator();
-	}
-	
-	/**
-	 **/
-	public class NodeIterator implements IIterator<Node<DataType>>
-	{
-		private int index=0;
-		@Override
-		public boolean hasNext()
-		{
-			if (index>=size())
-				return false;
-			return true;
-		}
-
-		@Override
-		public Node<DataType> getNext()
-		{
-			return findNode(index);
-		}
-
-		@Override
-		public int getIndex()
-		{
-			return index;
-		}
-
-		@Override
-		public int getSize()
-		{
-			return size();
-		}
-
-		@Override
-		public void reset() 
-		{
-			index = 0;
-		}
+		return new Iterator<Node<T>>(nodes);
 	}
 }

@@ -3,15 +3,13 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.log;
+package com.nullpointerworks.util;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-
-import com.nullpointerworks.util.Log;
 
 /**
  * Contains a few methods for placing data into, and from the clipboard.

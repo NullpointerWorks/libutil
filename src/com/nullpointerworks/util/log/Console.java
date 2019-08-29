@@ -16,16 +16,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
- * 
+ * The Console class serves as an implementation of a {@code JPanel} that captures the {@code System.out/err} print streams and displays them in an text area. This can be handy if the console output is not available at run-time, but there may be valuable information to display.
+ * @see JPanel
  * @author Michiel Drost - Nullpointer Works
  * @since 1.0.0
  */
-public class Console implements IConsumer 
+public class Console extends JPanel implements IConsumer 
 {
+	private static final long serialVersionUID = 1L;
+	
 	private static Console instance=null;
     
     /**
-     * 
+     * Returns an instance of the singleton {@code Console} object.
+     * @return an instance of the singleton {@code Console} object
      * @since 1.0.0
      */
 	public static Console getInstance()
@@ -34,44 +38,33 @@ public class Console implements IConsumer
 		return instance;
 	}
 	
-	private JPanel panel;
-	private JTextArea output;
 	private static Color BACKGROUND = new Color(0.2f,0.2f,0.2f,1.0f);
 	private static Color FOREGROUND = new Color(0.9f,0.9f,0.9f,1.0f);
-    
+	
+	// ==============================================
+	
+	private JTextArea output;
+	
     /**
-     * 
+     * Creates a new {@code Console} panel instance. Captures the {@code System.ou}t and {@code System.err} {@code PrintStream} objects and appends them to an internal JTextArea. 
      * @since 1.0.0
      */
     public Console() 
     {
-    	panel = new JPanel();
-    	panel.setLayout( new BorderLayout() );
+    	super();
+    	setLayout( new BorderLayout() );
         output = new JTextArea();
-        panel.add( new JScrollPane(output) );
+        add( new JScrollPane(output) );
         setLooks();
-
+        
         PrintStream po = System.out;
         PrintStream pe = System.err;
         
         System.setOut( new PrintStream( new StreamCapturer(this, po) ) ); // print output
         System.setErr( new PrintStream( new StreamCapturer(this, pe) ) ); // print errors
-        panel.setFont( new Font( "Courier New" , Font.PLAIN ,10 ) );
+        setFont( new Font( "Courier New" , Font.PLAIN ,10 ) );
     }
     
-    /**
-     * 
-     * @since 1.0.0
-     */
-    public JPanel getInterface()
-    {
-    	return panel;
-    }
-    
-    /**
-     * 
-     * @since 1.0.0
-     */
     @Override
     public void appendText(final String text) 
     {

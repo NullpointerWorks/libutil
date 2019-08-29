@@ -9,17 +9,37 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+/**
+ * Provides the function of capturing the input of a print stream and relays the text. All input is send to an object that implements {@code IConsumer} and, optionally, to another print stream. 
+ * @author Michiel Drost - Nullpointer Works
+ * @since 1.0.0
+ */
 public class StreamCapturer extends OutputStream 
 {
-    private StringBuilder buffer;
-    private IConsumer consumer;
-    private PrintStream old;
+    private final StringBuilder buffer = new StringBuilder(128);
+    private IConsumer consumer = null;
+    private PrintStream old = null;
     
-    public StreamCapturer(IConsumer consumer, PrintStream old) 
+	/**
+	 * Creates an {@code PrintStream} capture object. 
+	 * @param consumer - a reference object that can be written to
+	 * @since 1.0.0
+	 */
+    public StreamCapturer(IConsumer consumer) 
     {
-        buffer = new StringBuilder(128);
-        this.old = old;
         this.consumer = consumer;
+    }
+	
+	/**
+	 * Creates an {@code PrintStream} capture object. 
+	 * @param consumer - a reference object that can be written to
+	 * @param printstream - the old print stream that is being replaced
+	 * @since 1.0.0
+	 */
+    public StreamCapturer(IConsumer consumer, PrintStream printstream) 
+    {
+    	this(consumer);
+        this.old = printstream;
     }
     
     @Override
@@ -33,6 +53,6 @@ public class StreamCapturer extends OutputStream
 	        consumer.appendText( buffer.toString() );
 	        buffer.delete(0, buffer.length());
         }
-        old.print(c);
+        if (old!=null) old.print(c);
     }
 }

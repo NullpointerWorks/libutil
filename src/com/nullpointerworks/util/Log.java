@@ -5,11 +5,6 @@
  */
 package com.nullpointerworks.util;
 
-import java.io.PrintStream;
-
-import com.nullpointerworks.util.log.LogCapture;
-import com.nullpointerworks.util.log.StreamCapturer;
-
 /**
  * 
  * @since 1.0.0
@@ -17,46 +12,28 @@ import com.nullpointerworks.util.log.StreamCapturer;
  */
 public class Log 
 {
-	private static LogCapture captureOut;
-	private static LogCapture captureErr;
-	
 	/**
 	 * 
 	 * @since 1.0.0
 	 */
-	public static void capture()
+	public static void out(String... text)
 	{
-		capture(200);
+		for (String m : text)
+		{
+			out(m);
+		}
 	}
 	
 	/**
 	 * 
 	 * @since 1.0.0
 	 */
-	public static void capture(int maxlines)
+	public static void err(String... text)
 	{
-		captureOut = new LogCapture(maxlines);
-		captureErr = new LogCapture(maxlines);
-		System.setOut( new PrintStream( new StreamCapturer(captureOut, System.out) ) ); // print output
-		System.setErr( new PrintStream( new StreamCapturer(captureErr, System.err) ) ); // print errors
-	}
-	
-	/**
-	 * 
-	 * @since 1.0.0
-	 */
-	public static LogCapture getOutputStream()
-	{
-		return captureOut;
-	}
-	
-	/**
-	 * 
-	 * @since 1.0.0
-	 */
-	public static LogCapture getErrorStream()
-	{
-		return captureErr;
+		for (String m : text)
+		{
+			err(m);
+		}
 	}
 	
 	/**
