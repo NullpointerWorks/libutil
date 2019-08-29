@@ -16,6 +16,7 @@ import com.nullpointerworks.util.file.textfile.TextFileParser;
 /**
  * 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class Settings 
 {

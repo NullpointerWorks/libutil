@@ -19,26 +19,33 @@ import com.nullpointerworks.util.file.bytefile.ByteFile;
 import com.nullpointerworks.util.file.bytefile.ByteFileParser;
 
 /**
- * 
+ * Contains static members to assist in file reading, writing and streaming. Writing a text file can be done with an {@code String[]} object or with an instance of a {@code TextFile} object.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
 public class TextFileParser 
 {
 	/**
-	 * Save text file to disc. Set overwrite to true to delete and rewrite the file.
-	 * @throws IOException 
+	 * Save text file to disc with an override safeguard. Set overwrite to true to delete and rewrite the file. This method does not use the {@code getName()} method of the {@code TextFile} to determine its writing path.
+	 * @param path - the path to write to
+	 * @param file - the {@code TextFile} to write
+	 * @param override - set {@code true} to enable a file to be over written
+	 * @return {@code true} if the writing went successful
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
-	public static boolean write(String path, TextFile file, boolean overwrite) throws IOException
+	public static boolean write(String path, TextFile file, boolean override) throws IOException
 	{
-		if (overwrite) delete(path);
+		if (override) delete(path);
 		return write(path,file.getLines(),file.getEncoding());
 	}
 	
 	/**
-	 * Save text file to disc.
-	 * @throws IOException 
+	 * Save text file to disc. If the file already exists, it will be unsafely overridden. This method does not use the {@code getName()} method of the {@code TextFile} to determine its writing path.
+	 * @param path - the path to write to
+	 * @param file - the {@code TextFile} to write
+	 * @return {@code true} if the writing went successful
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
 	public static boolean write(String path, TextFile file) throws IOException
@@ -47,20 +54,35 @@ public class TextFileParser
 	}
 	
 	/**
-	 * Save the given array of strings to a file
-	 * @throws IOException 
+	 * Save the given array of strings to a file. If the file already exists, it will be unsafely overridden. Returns {@code true} if the writing went successful.
+	 * @param path - the path to write to
+	 * @param lines - the array of {@code Strings} to write
+	 * @param encoding - 
+	 * @return {@code true} if the writing went successful
+	 * @throws IOException if an I/O error occurs
 	 * @since 1.0.0
 	 */
 	public static boolean write(String path, String[] lines, final String encoding) throws IOException
 	{
 		if (path==null)
 		{
-			Log.err("TextFileParser: The given path string is null");
+			Log.err("TextFileParser: The given path string is null. Cancelling.");
 			return false;
 		}
 		
-		// test encoding
-		String enc = "UTF-16";
+		if (lines==null)
+		{
+			Log.err("TextFileParser: The given lines array is null. Cancelling.");
+			return false;
+		}
+		
+		if (encoding==null)
+		{
+			Log.err("TextFileParser: The given encoding is null. Cancelling.");
+			return false;
+		}
+		
+		String enc;
 		switch(encoding)
 		{
 		case "UTF8":
@@ -74,10 +96,10 @@ public class TextFileParser
 			enc = encoding;
 			break;
 		default:
-			Log.err("TextFileParser: Invalid encoding. Defaulting to UTF-16");
-			return false;
+			Log.err("TextFileParser: Invalid encoding. Defaulting to UTF-16.");
+			enc = "UTF-16";
 		}
-
+		
 		// write to file
 		ByteFile bf = new ByteFile();
 		int i=0;
@@ -94,7 +116,10 @@ public class TextFileParser
 	}
 	
 	/**
-	 * @throws FileNotFoundException 
+	 * Returns the content of the given file as text in a new instance of the {@code TextFile} object. If an {@code IOException} occurs during reading, the text that was read is returned in the returned {@code TextFile}.
+	 * @param path - the file path
+	 * @return the content of the given file as text in a new instance of the {@code TextFile} object
+	 * @throws FileNotFoundException if the file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading
 	 * @since 1.0.0
 	 */
 	public static TextFile file(String path) throws FileNotFoundException
@@ -105,7 +130,9 @@ public class TextFileParser
 	}
 	
 	/**
-	 * 
+	 * Returns the content of the given file as text in a new instance of the {@code TextFile} object. If an {@code IOException} occurs during reading, the text that was read is returned in the returned {@code TextFile}.
+	 * @param is - the file {@code InputStream} object
+	 * @return the content of the given file as text in a new instance of the {@code TextFile} object
 	 * @since 1.0.0
 	 */
 	public static TextFile stream(InputStream is)
@@ -121,7 +148,7 @@ public class TextFileParser
 		TextFile tf = new TextFile();
 		
 		String line;
-		try 
+		try
 		{
 			while ((line = br.readLine()) != null) 
 			{
@@ -140,7 +167,9 @@ public class TextFileParser
 	}
 	
 	/**
-	 * Deletes the given file or directory. A directory must be empty before it can be deleted.
+	 * Deletes the given file or directory. A directory must be empty before it can be deleted. Returns {@code true} if the deletion was successful.
+	 * @param path - the path to be deleted
+	 * @return {@code true} if the deletion was successful
 	 * @since 1.0.0
 	 */
 	public static boolean delete(String path)

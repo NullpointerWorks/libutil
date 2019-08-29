@@ -13,6 +13,7 @@ import com.nullpointerworks.util.log.StreamCapturer;
 /**
  * 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class Log 
 {

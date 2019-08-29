@@ -14,8 +14,8 @@ import java.io.OutputStream;
 
 /**
  * 
- * @author Michiel Drost - Nullpointer Works
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class FileUtil 
 {

@@ -5,18 +5,26 @@
  */
 package com.nullpointerworks.util.sorting;
 
+/**
+ * Contains an implementation of the Quick Sort algorithm. This abstract class will force the creation of a {@code compare(T a, T b)} method.
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public abstract class QuickSort<T> implements Compare<T>
 {
-	/*
-	 * sort the given array
+	/**
+	 * Sort the given array with using the QuickSort algorithm.
+	 * @param A - the array to sort
+	 * @since 1.0.0
 	 */
 	public void sort(T[] A)
 	{
 		sort(A, 0, A.length - 1);
 	}
 	
-	/*
+	/**
 	 * start the quick-sort algorithm
+	 * @since 1.0.0
 	 */
 	private void sort(T[] A, int lo, int hi)
 	{
@@ -28,8 +36,9 @@ public abstract class QuickSort<T> implements Compare<T>
 		}
 	}
 	
-	/*
+	/**
 	 * test a subdivision in the array
+	 * @since 1.0.0
 	 */
 	private int partition(T[] A, int lo, int hi)
 	{
@@ -51,8 +60,9 @@ public abstract class QuickSort<T> implements Compare<T>
 		return i;
 	}
 	
-	/*
+	/**
 	 * swap two values in the array
+	 * @since 1.0.0
 	 */
 	private void swap(T[] a, int i1, int i2)
 	{

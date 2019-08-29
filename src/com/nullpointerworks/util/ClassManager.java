@@ -19,7 +19,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * 
+ * A dynamic class loader for loading classes and files at run-time. This class is particularly useful when implementing plug-in capabilities to your project.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
@@ -28,7 +28,8 @@ public class ClassManager
 	private static ClassManager inst = null;
 	
 	/**
-	 * 
+	 * Returns an instance of the singleton {@code ClassManager} object.
+	 * @return an instance of the singleton {@code ClassManager} object
 	 * @since 1.0.0
 	 */
 	public static ClassManager getInstance()
@@ -47,9 +48,10 @@ public class ClassManager
 	}
 	
 	/**
-	 * Returns the {@code Class} object associated with the class or interface with the given string name.
+	 * Returns the {@code Class} object associated with the class or interface with the given string name. If the class can not be found in the {@code ClassManager} then this method will attempt to search the JVM class register.
 	 * @param classname - the fully qualified name of the desired class.
-     * @return the {@code Class} object for the class with the specified name.
+     * @return the {@code Class} object for the class with the specified name
+     * @throws ClassNotFoundException if the class cannot be located
 	 * @since 1.0.0
 	 * @see Class
 	 */
@@ -67,7 +69,9 @@ public class ClassManager
 	}
 	
 	/**
-	 * 
+	 * Return a {@code List} of classes that extend the given superclass. This list will be empty if none of the loaded classes extend the superclass.
+	 * @param superclass - the expected superclass of the loaded classes
+	 * @return a {@code List} of classes that extend the given superclass
 	 * @since 1.0.0
 	 */
 	public List<Class<?>> findClassBySuperClass(Class<?> superclass)
@@ -87,16 +91,18 @@ public class ClassManager
 	}
 	
 	/**
-	 * 
+	 * Opens a local jar file and loads the content of all {@code class} files. 
+	 * @param path - path to the *.jar file
+	 * @throws IOException if an I/O error has occurred
 	 * @since 1.0.0
 	 */
-	public void loadJavaArchive(String pathToJar) 
+	public void loadJavaArchive(String path) 
 			throws IOException
 	{
-		if (!pathToJar.endsWith(".jar")) return;
+		if (!path.endsWith(".jar")) return;
 		
-		JarFile jarFile 			= new JarFile(pathToJar);
-		URL[] urls 					= { new URL("jar:file:" + pathToJar+"!/") };
+		JarFile jarFile 			= new JarFile(path);
+		URL[] urls 					= { new URL("jar:file:" + path+"!/") };
 		URLClassLoader cl 			= new URLClassLoader(urls);
 		Enumeration<JarEntry> e 	= jarFile.entries();
 		while (e.hasMoreElements()) 
@@ -116,7 +122,7 @@ public class ClassManager
 			catch (ClassNotFoundException ex)
 			{
 				//ex.printStackTrace();
-				System.err.println("ClassManager: Cannot find the class file for \""+className+"\".");
+				System.err.println("ClassManager: Cannot find the *.class file for \""+className+"\".");
 				continue;
 			}
 		    

@@ -5,6 +5,11 @@
  */
 package com.nullpointerworks.util.pack;
 
+/**
+ * 
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public class Tuple<A,B,C>
 {
 	public A first; 

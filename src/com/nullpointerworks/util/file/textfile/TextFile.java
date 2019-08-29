@@ -10,9 +10,10 @@ import com.nullpointerworks.util.file.Encoding;
 import com.nullpointerworks.util.pack.Array;
 
 /**
- * A text file consisting of a list of String objects that represent each line of text.
+ * Contains the information for a text file consisting of a list of {@code String} objects that represent each line of text. The default encoding is set to "UTF-16" but can be changed if needed.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
+ * @see Encoding
  */
 public class TextFile
 {
@@ -73,7 +74,8 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Set the name of the text file. This method is used when reading or writing to a storage device.
+	 * @param name - name of the text file
 	 * @since 1.0.0
 	 */
 	public void setName(String name) 
@@ -82,7 +84,8 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Add a line of text to the file. This line is added to the bottom of the text.
+	 * @param line - the text to place
 	 * @since 1.0.0
 	 */
 	public void addLine(String line)
@@ -91,35 +94,51 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Inserts the specified {@code String} at the given index in this list. The {@code String} at the given index is shifted down the list.
+	 * @param index - the specified index to place to
+	 * @param line - the text to insert
+	 * @since 1.0.0
+	 */
+	public void insertLine(int index, String line)
+	{
+		lines.add(index, line);
+	}
+	
+	/**
+	 * Returns the text at the given index if available, {@code null} otherwise.
+	 * @param index - the index to read from
+	 * @return the text at the given index if available, {@code null} otherwise
 	 * @since 1.0.0
 	 */
 	public String getLine(int index)
 	{
 		if (index < 0 || index >= lines.size()) 
 		{
-			Log.err("Error retrieving line from TextFile. Returning an empty line instead.");
-			return "";
+			Log.err("Error retrieving line from TextFile. Returning null.");
+			return null;
 		}
 		return lines.get(index);
 	}
 	
 	/**
-	 * 
+	 * Set the text at the given index to the text provided. If the index is invalid, the edit is cancelled.
+	 * @param index - the index to write to
+	 * @param line - the text to write
 	 * @since 1.0.0
 	 */
 	public void setLine(int index, String line)
 	{
 		if (index < 0 || index >= lines.size()) 
 		{
-			Log.err("Error overwriting line in TextFile. Cancelling edit.");
+			Log.err("Error overwriting index out of bounds. Cancelling edit.");
 			return;
 		}
 		lines.set(index, line);
 	}
 	
 	/**
-	 * 
+	 * Returns an array of {@code String} objects with the content of the text file.
+	 * @return an array of {@code String} objects with the content of the text file 
 	 * @since 1.0.0
 	 */
 	public String[] getLines() 
@@ -128,7 +147,8 @@ public class TextFile
 	}
 	
 	/**
-	 * 
+	 * Returns the amount of lines available in the text file.
+	 * @return the amount of lines available in the text file
 	 * @since 1.0.0
 	 */
 	public int getSize() 
