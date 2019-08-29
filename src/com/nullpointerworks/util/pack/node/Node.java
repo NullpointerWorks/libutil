@@ -5,7 +5,8 @@
  */
 package com.nullpointerworks.util.pack.node;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.nullpointerworks.util.pattern.Iterator;
 
@@ -19,7 +20,7 @@ public class Node<T>
 	private String seperator = "/";
 	private T nodeValue=null;
 	private String name=null;
-	private Vector<Node<T>> nodes=null;
+	private List<Node<T>> nodes=null;
 	private NodeValidation<T> validCheck = new NodeValidation<T>()
 	{
 		@Override
@@ -37,7 +38,8 @@ public class Node<T>
 	public Node() { }
 	
 	/**
-	 * 
+	 * Creates a new node with the given name but without a value object or validation method.
+	 * @param name - name of the node
 	 * @since 1.0.0
 	 */
 	public Node(String name)
@@ -46,7 +48,9 @@ public class Node<T>
 	}
 	
 	/**
-	 * 
+	 * Creates a new node with the given name and having the value specified with the given class, but without a validation method.
+	 * @param name - name of the node
+	 * @param value - the value object
 	 * @since 1.0.0
 	 */
 	public Node(String name, T value)
@@ -55,16 +59,47 @@ public class Node<T>
 	}
 	
 	/**
-	 * 
+	 * Creates a new node with the given name, having the value specified with the given class and a validation method.
+	 * @param name - name of the node
+	 * @param value - the value object
+	 * @param valid - the validation method
 	 * @since 1.0.0
 	 */
 	public Node(String name, T value, NodeValidation<T> valid)
 	{ 
 		makeNode(name,value,valid); 
 	}
+
+	/**
+	 * Creates a new node with a list of node names where this node is to be created. The last node name is the name of the created node.
+	 * @param path - the list of node names
+	 * @param value - the value object
+	 * @param valid - the validation method
+	 * @since 1.0.0
+	 */
+	public Node(List<String> path, T value, NodeValidation<T> valid)
+	{
+		makeNode(path.get(0),null,valid);
+		path.remove(0);
+		createPath(path,value,valid);
+	}
 	
 	/**
-	 * 
+	 * Makes a new branch end
+	 * @since 1.0.0
+	 */
+	private void makeNode(String name, T value, NodeValidation<T> valid)
+	{
+		nodes = new ArrayList<Node<T>>();
+		this.name = name;
+		if (valid!=null) this.validCheck = valid;
+		this.setValue(value);
+	}
+	
+	/**
+	 * Returns the value object of the node at the specified index. If the node is not available, this method returns {@code null}.
+	 * @param index - the index of the node
+	 * @return the value object of the node at the specified index. If the node is not available, this method returns {@code null}
 	 * @since 1.0.0
 	 */
 	public T findValue(int index)
@@ -74,58 +109,23 @@ public class Node<T>
 	}
 	
 	/**
-	 * Find a value using a given path. The default separator is '/'.<br>
-	 * Use 'findValue(String path, String separator)' to use a custom separator
+	 * Locates the value of the node at the specified path. 
+	 * @param path - the node path
+	 * @return the value object of the node. If the node is not available, this method returns {@code null}
 	 * @since 1.0.0
 	 */
 	public T findValue(String path)
 	{
-		return findValue(path,seperator);
-	}
-
-	/**
-	 * 
-	 * @since 1.0.0
-	 */
-	public T findValue(String path, String seperator)
-	{
-		return findValue( makeVectorPath(path, seperator) );
-	}
-
-	/**
-	 * Find a child node using an index or path.
-	 * @since 1.0.0
-	 */
-	public Node<T> findNode(int index)
-	{
-		if (index>=size()||index<0)
-			return new Node<T>();
-		return nodes.get(index);
-	}
-
-	/**
-	 * 
-	 * @since 1.0.0
-	 */
-	public Node<T> findNode(String path)
-	{
-		return findNode( makeVectorPath(path, seperator) );
-	}
-
-	/**
-	 * 
-	 * @since 1.0.0
-	 */
-	public Node<T> findNode(String path, String seperator)
-	{
-		return findNode( makeVectorPath(path, seperator) );
+		return findValue( listPath(path, seperator) );
 	}
 	
 	/**
-	 * Find a value using a path in the form of a Vector. Each element is a segment of the absolute path to the item. Example: root/folder/anotherFolder/myValue where myValue is the target value, not a folder.
+	 * Locates the value of the node at the specified path in the form of a {@code List} object. Each list element specifies a node with the nast node being the target container. 
+	 * @param path - the node path
+	 * @return the value object of the node. If the node is not available, this method returns {@code null}
 	 * @since 1.0.0
 	 */
-	public T findValue(Vector<String> path)
+	public T findValue(List<String> path)
 	{
 		if (path.size()<1)
 		{
@@ -143,12 +143,42 @@ public class Node<T>
 		}
 		return null;
 	}
+	
+	/**
+	 * Find the child node at the specified index if available, otherwise {@code null}
+	 * @param index - the node index
+	 * @return the node at the given index if available, otherwise {@code null}
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(int index)
+	{
+		if (index < 0 || index>=nodes.size()) return null;
+		return nodes.get(index);
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(String path)
+	{
+		return findNode( listPath(path, seperator) );
+	}
 
 	/**
 	 * 
 	 * @since 1.0.0
 	 */
-	public Node<T> findNode(Vector<String> path)
+	public Node<T> findNode(String path, String seperator)
+	{
+		return findNode( listPath(path, seperator) );
+	}
+
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public Node<T> findNode(List<String> path)
 	{
 		if (path.size()<1)
 		{
@@ -174,7 +204,7 @@ public class Node<T>
 	 * parent node so you can chain multiple creatPath() together.<br>
 	 * Example: root.createPath("first",1).createPath("second",2).createPath("third",3)<br>
 	 * <br>
-	 * createPath(String, C) accepts a third optional parameter which is the Validation class.<br>
+	 * createPath(String, T) accepts a third optional parameter which is the Validation class.<br>
 	 * Validation allows values to be set if they pass validation and are otherwise discarded.
 	 * @since 1.0.0
 	 **/
@@ -194,24 +224,14 @@ public class Node<T>
 	 **/
 	public Node<T> createPath(String path, T value, NodeValidation<T> valid)
 	{
-		createPath( makeVectorPath(path,seperator) , value, valid);
+		createPath( listPath(path,seperator) , value, valid);
 		return this;
-	}
-
-	/**
-	 * @since 1.0.0
-	 */
-	public Node(Vector<String> path, T value, NodeValidation<T> valid)
-	{
-		makeNode(path.get(0),null,valid);
-		path.remove(0);
-		createPath(path,value,valid);
 	}
 	
 	/*
 	 * @since 1.0.0
 	 */
-	private Node<T> createPath(Vector<String> path, T value, NodeValidation<T> valid)
+	private Node<T> createPath(List<String> path, T value, NodeValidation<T> valid)
 	{
 		if (path.size()<1)
 		{
@@ -238,25 +258,12 @@ public class Node<T>
 	/**
 	 * @since 1.0.0
 	 */
-	private Vector<String> makeVectorPath(String path, String sep)
+	private List<String> listPath(String path, String sep)
 	{
 		String[] tokens = path.split(sep);
-		Vector<String> vectorPath = new Vector<String>();
-		for (String s:tokens)
-			vectorPath.add(s);
-		return vectorPath;
-	}
-	
-	/**
-	 * Makes a node end point
-	 * @since 1.0.0
-	 */
-	private void makeNode(String name, T value, NodeValidation<T> valid)
-	{
-		nodes = new Vector<Node<T>>();
-		this.name = name;
-		if (valid!=null) this.validCheck = valid;
-		this.setValue(value);
+		List<String> list = new ArrayList<String>();
+		for (String s:tokens) list.add(s);
+		return list;
 	}
 	
 	/**
@@ -337,9 +344,7 @@ public class Node<T>
 				return true;
 			}
 			else
-			{
-				if (validCheck==null) return true;
-			}
+			if (validCheck==null) return true;
 		}
 		return false;
 	}
