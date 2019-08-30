@@ -5,11 +5,39 @@
  */
 package com.nullpointerworks.util.pattern;
 
+/**
+ * 
+ * @since 1.0.0
+ */
 public interface IIterator<C>
 {	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public boolean hasNext();
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public C getNext();
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public int getSize();
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public int getIndex();
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void reset();
 }
