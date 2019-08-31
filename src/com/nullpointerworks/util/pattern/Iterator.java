@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class Iterator<T> implements IIterator<T>
 {

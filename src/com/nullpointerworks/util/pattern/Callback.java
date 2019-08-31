@@ -6,16 +6,17 @@
 package com.nullpointerworks.util.pattern;
 
 /**
- * callback utility for a visitor pattern
+ * A callback utility template for a visitor pattern. The template class is used as a reference for custom data transfers.
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
-public abstract class Callback 
+public abstract class Callback<T>
 {
 	/**
 	 * 
 	 * @since 1.0.0
 	 */
-	public abstract void onCall(int index);
+	public abstract void onCall(T ref);
 	
 	/**
 	 * 

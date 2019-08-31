@@ -8,6 +8,7 @@ package com.nullpointerworks.util.pattern;
 /**
  * 
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public interface IIterator<C>
 {	
