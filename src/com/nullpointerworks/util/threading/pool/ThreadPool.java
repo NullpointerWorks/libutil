@@ -9,6 +9,13 @@ import com.nullpointerworks.util.Log;
 import com.nullpointerworks.util.pack.Array;
 import com.nullpointerworks.util.threading.Threading;
 
+/**
+ * 
+ * 
+ * 
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public class ThreadPool extends Thread
 {
 	private final int SLEEP_MILLI = 1;

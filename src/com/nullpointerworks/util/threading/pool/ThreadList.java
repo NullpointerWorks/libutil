@@ -7,6 +7,13 @@ package com.nullpointerworks.util.threading.pool;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * 
+ * 
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public class ThreadList extends ThreadPool
 {
 	private ArrayList<Runnable> list;

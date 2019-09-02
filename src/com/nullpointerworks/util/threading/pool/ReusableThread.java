@@ -7,6 +7,13 @@ package com.nullpointerworks.util.threading.pool;
 
 import com.nullpointerworks.util.Log;
 
+/**
+ * 
+ * 
+ * 
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public class ReusableThread extends Thread 
 {
 	private Runnable r = null;
