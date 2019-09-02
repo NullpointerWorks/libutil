@@ -7,6 +7,9 @@ package com.nullpointerworks.util.threading.event;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.nullpointerworks.util.threading.UnavailablePoolException;
+
 import java.util.List;
 import java.util.Vector;
 
@@ -38,8 +41,8 @@ public class EventManager<E>
 	}
 	
 	/**
-	 * 
-	 * @param 
+	 * Adds an {@code EventParticipant} implementation to the manager object.
+	 * @param p - the participant to add
 	 * @since 1.0.0
 	 */
 	public void addParticipant(EventParticipant<E> p)
@@ -48,17 +51,19 @@ public class EventManager<E>
 	}
 	
 	/**
-	 * 
-	 * @param 
+	 * Fires an event thread on each participant available in the manager. Each event participant gains asynchronous access to the provided template object.
+	 * @param e - the data passes to all available participants
+	 * @throws UnavailablePoolException when the primary thread is not(yet) operational
 	 * @since 1.0.0
 	 */
-	public void fireEvent(E e)
+	public void fireEvent(E e) throws UnavailablePoolException
 	{
+		if (run==false) throw new UnavailablePoolException();
 		eventlist.add(e);
 	}
 	
 	/**
-	 * 
+	 * Stops the primary execution thread of the event manager. The manager will not execute any events after calling this method. 
 	 * @since 1.0.0
 	 */
 	public void stop()
@@ -67,7 +72,7 @@ public class EventManager<E>
 	}
 	
 	/**
-	 * Starts the manager thread.
+	 * Starts the manager thread. 
 	 * @since 1.0.0
 	 */
 	private void startEventManager()

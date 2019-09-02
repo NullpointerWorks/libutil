@@ -5,34 +5,45 @@
  */
 package com.nullpointerworks.util.threading.pool;
 
+import java.util.List;
 import java.util.ArrayList;
 
+import com.nullpointerworks.util.threading.ReusableThread;
+import com.nullpointerworks.util.threading.UnavailablePoolException;
+
 /**
- * 
- * 
- * 
+ * The {@code ThreadList} is a subclass of the {@code ThreadPool} class with the additional feature of restocking the pool a fixed list of stored Runnable references. 
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
+ * @see ThreadPool
  */
 public class ThreadList extends ThreadPool
 {
-	private ArrayList<Runnable> list;
+	private List<Runnable> list;
 	private int THREADS_STORED = 0;
 	
-	public ThreadList(int t) 
+	/**
+	 * Creates a new threading pool with instances of the {@code ReusableThread} class. It's minimum number of running threads is 1 and has no maximum initialization value.
+	 * @param maxThreads - the maximum number of simultaneously running threads
+	 * @since 1.0.0
+	 * @see ReusableThread
+	 * @see ThreadPool
+	 */
+	public ThreadList(int maxThreads) 
 	{
-		super(t);
+		super(maxThreads);
 		list = new ArrayList<Runnable>();
 	}
 	
 	/**
-	 * Restock the thread pool
+	 * Restocks the ThreadPool with a new set of references to the ThreadPool queue. This method does not check for currently held duplicates of the stored Runnable objects. 
+	 * @throws UnavailablePoolException when the primary thread is not(yet) operational
+	 * @since 1.0.0
 	 */
-	public void restock()
+	public void restock() throws UnavailablePoolException
 	{
 		synchronized(list)
 		{
-			// put the list on the execution list
 			for (int i=0; i<THREADS_STORED; i++)
 			{
 				execute( list.get(i) );
@@ -41,7 +52,9 @@ public class ThreadList extends ThreadPool
 	}
 	
 	/**
-	 * Add a Runnable to the execution list.
+	 * Add a Runnable to the execution stockpile.
+	 * @param r - the Runnable to store
+	 * @since 1.0.0
 	 */
 	public void store(Runnable r)
 	{
@@ -52,9 +65,7 @@ public class ThreadList extends ThreadPool
 		}
 	}
 	
-	/**
-	 * 
-	 */
+	@Override
 	public void free()
 	{
 		super.free();

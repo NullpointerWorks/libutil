@@ -3,14 +3,12 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading.pool;
+package com.nullpointerworks.util.threading;
 
 import com.nullpointerworks.util.Log;
 
 /**
- * 
- * 
- * 
+ * A {@code ReusableThread} is a thread implementation that is meant to memory friendly. Normal {@code Thread} instances can not be reset after their main code has finished execution. To execute the code again, a new thread object needs to be instantiated. This threading subclass runs a provided Runnable instance without killing the main thread when finished.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
@@ -19,12 +17,21 @@ public class ReusableThread extends Thread
 	private Runnable r = null;
 	private Boolean hasRunnable = false;
 	private Boolean isAlive = false;
-
+	
+	/**
+	 * Creates a new Thread object without a set runnable code to execute. 
+	 * @since 1.0.0
+	 */
 	public ReusableThread()
 	{
 		super();
 	}
 	
+	/**
+	 * Creates a new Thread object with an initial runnable code to execute. 
+	 * @param r - the runnable to initialize with
+	 * @since 1.0.0
+	 */
 	public ReusableThread(Runnable r)
 	{
 		super();
@@ -59,7 +66,9 @@ public class ReusableThread extends Thread
 	}
 	
 	/**
-	 * return true if the thread has a runnable to execute.
+	 * Returns {@code true} if the thread has a runnable to execute.
+	 * @return {@code true} if the thread has a runnable to execute
+	 * @since 1.0.0
 	 */
 	public boolean hasRunnable() 
 	{
@@ -70,7 +79,9 @@ public class ReusableThread extends Thread
 	}
 	
 	/**
-	 * execute the given runnable
+	 * Sets a reference of a runnable to run at the next iteration of the threading loop.
+	 * @param run - the runnable to run
+	 * @since 1.0.0
 	 */
 	public void setRunnable(Runnable run)
 	{
@@ -82,9 +93,6 @@ public class ReusableThread extends Thread
 		}
 	}
 	
-	/**
-	 * 
-	 */
 	@Override
 	public void run()
 	{
@@ -116,8 +124,9 @@ public class ReusableThread extends Thread
 		free();
 	}
 	
-	/*
-	 * 
+	/**
+	 * Clears the thread of it's currently executing runnable and sets the kill flag to end the thread.
+	 * @since 1.0.0
 	 */
 	public void free()
 	{
@@ -125,6 +134,7 @@ public class ReusableThread extends Thread
 		{
 			hasRunnable = false;
 			r = null;
+			isAlive = false;
 		}
 	}
 }

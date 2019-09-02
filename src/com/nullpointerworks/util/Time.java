@@ -1,4 +1,4 @@
-package com.nullpointerworks.util.timing;
+package com.nullpointerworks.util;
 
 public class Time 
 {

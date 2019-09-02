@@ -5,82 +5,115 @@
  */
 package com.nullpointerworks.util.timing;
 
+/**
+ * A delay is used for real-time applications that use iterative time updates to prevent code from being executed too often. The reliability of the Delay object depends on the time step granularity of the loop used. Applications with large time step granularity will cause this delay to be much later than expected. 
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public class Delay 
 {
 	private float delayCount;
 	private float delayMax;
-	private boolean enabled = true;
-	
 	private int repeatCount;
 	private int repeatMax;
-	private boolean repeatBool = false;
+	private boolean enabled = true;
 	
-	public Delay(float max)
+	/**
+	 * Creates a new delay with a specified trigger time. This constructor is identical to calling the following:<pre> new Delay(delay,0);</pre>
+	 * @param delay - the time to update before it triggers
+	 * @since 1.0.0
+	 */
+	public Delay(float delay)
 	{
-		delayMax=max;
-		delayCount=0f;
-		repeatMax=repeatCount=0;
+		this(delay,0);
 	}
 	
-	public Delay(float max, int repeat, boolean repeatedBool)
+	/**
+	 * Creates a new delay with a specified trigger time and repetition count. This delay will cease to function when the amount of triggers has exceeded the repeat count.
+	 * @param delay - the time to update before it triggers
+	 * @param repeat - the amount of times this delay may repeat
+	 * @since 1.0.0
+	 */
+	public Delay(float delay, int repeat)
 	{
-		delayMax=max;
+		setDelay(delay);
 		delayCount=0f;
 		repeatMax=repeat;
 		repeatCount=0;
-		repeatBool=repeatedBool;
 	}
 	
-	public boolean mayRun(float time)
-	{
-		add(time);
-		return mayRun();
-	}
-	
-	public void add(float time)
-	{
-		if (isEnabled())
-			delayCount+=time;
-	}
-	
-	public boolean mayRun()
+	/**
+	 * Returns {@code true} if the time added to the counter has exceeded the preset timing and has not exceeded it's maximum repeat count, if set. Returns {@code false} otherwise.
+	 * @param time - the time to add before checking
+	 * @return {@code true} if the time added to the counter has exceeded the preset timing and has not exceeded it's maximum repeat count
+	 * @since 1.0.0
+	 */
+	public boolean onCheck(float time)
 	{
 		if (isEnabled())
 		{
-			if (repeatMax > 0) // if we are setting repetition
+			delayCount+=time;
+			
+			if (repeatMax > 0)
 			{
-				if (repeatCount >= repeatMax)
-					return repeatBool;
+				if (repeatCount >= repeatMax) return false;
 			}
 			
 			if (delayCount>=delayMax)
 			{
 				delayCount = 0f;
-				repeatCount++;
+				if (repeatMax > 0) repeatCount++;
 				return true;
 			}
 		}
 		return false;
 	}
 	
+	/**
+	 * Returns {@code true} if the time counter has exceeded the preset timing, but has not exceeded it's maximum repeat count, if set. Returns {@code false} otherwise. Calling this method is similar to calling {@code onCheck(0f)}.
+	 * @return {@code true} if the counter has exceeded the preset timing and has not exceeded it's maximum repeat count
+	 * @since 1.0.0
+	 */
+	public boolean onCheck()
+	{
+		return onCheck(0f);
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public boolean isEnabled() 
 	{
 		return enabled;
 	}
-
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
+	public void setDelay(float time)
+	{
+		delayMax=time;
+	}
+	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void setEnabled(boolean enabled) 
 	{
 		this.enabled = enabled;
 	}
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public void reset()
 	{
 		delayCount = 0f;
 		repeatCount = 0;
-	}
-	
-	public void setDelay(float time)
-	{
-		delayMax=time;
+		enabled = true;
 	}
 }

@@ -5,29 +5,37 @@
  */
 package com.nullpointerworks.util.threading.pool;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import com.nullpointerworks.util.Log;
-import com.nullpointerworks.util.pack.Array;
+import com.nullpointerworks.util.threading.ReusableThread;
 import com.nullpointerworks.util.threading.Threading;
+import com.nullpointerworks.util.threading.UnavailablePoolException;
 
 /**
- * 
- * 
- * 
+ * The {@code ThreadPool} is an object that manages asynchronous execution of {@code Runnable} instances. It contains a fixed size of threads that execute from an unbounded queue. Any {@code Runnable} added to the queue will be executed as soon as a thread has completed its previous task and is next in line to be executed.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
 public class ThreadPool extends Thread
 {
-	private final int SLEEP_MILLI = 1;
-	private int threads = 0;
+	private int SLEEP_MILLI = 1;
+	private int threads 	= 0;
 	private Boolean isRunning = true;
 	private ReusableThread[] pool;
-	private Array<Runnable> pending;
+	private List<Runnable> pending;
 	
-	public ThreadPool(int t)
+	/**
+	 * Creates a new threading pool with instances of the {@code ReusableThread} class. It's minimum number of running threads is 1 and has no maximum initialization value.
+	 * @param maxThreads - the maximum number of simultaneously running threads
+	 * @since 1.0.0
+	 * @see ReusableThread
+	 */
+	public ThreadPool(int maxThreads)
 	{
-		threads = (t<1)?1:t;
-		pending = new Array<Runnable>();
+		threads = (maxThreads<1)?1:maxThreads;
+		pending = new ArrayList<Runnable>();
 		pool 	= new ReusableThread[threads];
 		
 		for (int i=0; i<threads; i++)
@@ -39,9 +47,6 @@ public class ThreadPool extends Thread
 		this.start();
 	}
 	
-	/**
-	 * 
-	 */
 	@Override
 	public void start()
 	{
@@ -50,10 +55,14 @@ public class ThreadPool extends Thread
 	}
 	
 	/**
-	 * Add a Runnable to the execution list.
+	 * Add a Runnable to the execution queue. It will be executed after all preceding Runnable objects have been executed.
+	 * @param r - the runnable to add to the queue
+	 * @throws UnavailablePoolException when the primary thread is not(yet) operational
+	 * @since 1.0.0
 	 */
-	public void execute(Runnable r)
+	public void execute(Runnable r) throws UnavailablePoolException
 	{
+		if (isRunning) throw new UnavailablePoolException();
 		synchronized(pending)
 		{
 			pending.add( r );
@@ -61,7 +70,8 @@ public class ThreadPool extends Thread
 	}
 	
 	/**
-	 * Raise a termination flag for the thread pool
+	 * Raise a termination flag for the thread pool. At the next cycle of the threading pool check, the primary Thread will be terminated. All Runnable objects will we removed from the execution queue. All Threads currently running a Runnable will continue to run until their active code has ended.
+	 * @since 1.0.0
 	 */
 	public void terminate() 
 	{
@@ -69,7 +79,9 @@ public class ThreadPool extends Thread
 	}
 	
 	/**
-	 * Returns true if all threads have completed and the main thread has been terminated
+	 * Returns {@code true} if all threads have completed and the main thread has been terminated.
+	 * @return {@code true} if all threads have completed and the main thread has been terminated
+	 * @since 1.0.0
 	 */
 	public boolean isTerminated() 
 	{
@@ -78,7 +90,9 @@ public class ThreadPool extends Thread
 	}
 	
 	/**
-	 * Returns true if all threads have completed
+	 * Returns {@code true} if all threads are idle and the execution queue is empty.
+	 * @return {@code true} if all threads are idle and the execution queue is empty
+	 * @since 1.0.0
 	 */
 	public boolean isCompleted() 
 	{
@@ -99,15 +113,11 @@ public class ThreadPool extends Thread
 		return true;
 	}
 	
-	/**
-	 * 
-	 */
 	@Override
 	public void run()
 	{
 		while(isRunning)
 		{
-			// check states in the pool
 			synchronized(pool)
 			{
 				for (int i=0; i<threads; i++)
@@ -117,7 +127,6 @@ public class ThreadPool extends Thread
 					{
 						synchronized(pending)
 						{
-							// if no runnable available, skip
 							if (pending.isEmpty()) continue;
 							Runnable r = pending.get(0);
 							t.setRunnable(r);
@@ -126,14 +135,13 @@ public class ThreadPool extends Thread
 					}
 				}
 			}
-			
 			Threading.sleep(SLEEP_MILLI, 0);
-			
-		}//end while
+		}
 	}
 	
-	/*
-	 * clean the pool
+	/**
+	 * Clears the execution queue and sets all running threads in the termination status. The pool can not be used after calling this method.
+	 * @since 1.0.0
 	 */
 	public void free()
 	{

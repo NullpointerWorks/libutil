@@ -5,12 +5,22 @@
  */
 package com.nullpointerworks.util.timing;
 
+
+/**
+ * 
+ * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
+ */
 public class Timer 
 {
 	private float time = 0f;
 	private float delay = 1f;
 	private Runnable call;
 	
+	/**
+	 * 
+	 * @since 1.0.0
+	 */
 	public Timer(Runnable cb, float de)
 	{
 		call = cb;
@@ -19,19 +29,21 @@ public class Timer
 	
 	/**
 	 * Update the timer and execute a callback in the same thread
+	 * @since 1.0.0
 	 */
 	public void update(float dt)
 	{
 		time += dt;
 		if (time >= delay)
 		{
-			call.run();
 			time -= delay;
+			call.run();
 		}
 	}
 	
 	/**
 	 * Reset the counter and cumulative time
+	 * @since 1.0.0
 	 */
 	public void reset()
 	{
@@ -40,6 +52,7 @@ public class Timer
 	
 	/**
 	 * Update the timer, if the callback is triggered, it's executed in a new thread
+	 * @since 1.0.0
 	 */
 	public void updateThreaded(float dt)
 	{
