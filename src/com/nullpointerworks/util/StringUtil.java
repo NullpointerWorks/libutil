@@ -6,16 +6,57 @@
 package com.nullpointerworks.util;
 
 /**
- * 
+ * Provides a set of utility functions for manipulating Strings.
  * @since 1.0.0
+ * @author Michiel Drost - Nullpointer Works
  */
 public class StringUtil 
 {
-	public static final boolean NO_TRIM = false;
-	public static final boolean TRIM 	= true;
+	public static final boolean TRIM 		= true;
+	public static final boolean NO_TRIM 	= false;
+	private static final String INTEGER 	= "[+-]?\\d+";
+	private static final String HEXADEC 	= "^(0x|0X|#).[0-9A-Fa-f]+";
+	private static final String FLOATING 	= "[+-]?((\\d+\\.?\\d*)|(\\.\\d+))";
+
+	/**
+	 * Returns {@code true} if the given String can be parsed as an integer number.
+	 * @param str - the string to check
+	 * @return {@code true} if the given String can be parsed as an integer number
+	 * @since 1.0.0
+	 */
+	public static boolean isInteger(String str)
+	{
+		return str.matches(INTEGER);
+	}
+	
+	/**
+	 * Returns {@code true} if the given String can be parsed as an hexadecimal number.
+	 * @param str - the string to check
+	 * @return {@code true} if the given String can be parsed as an hexadecimal number
+	 * @since 1.0.0
+	 */
+	public static boolean isHexadec(String str)
+	{
+		return str.matches(HEXADEC);
+	}
+	
+	/**
+	 * Returns {@code true} if the given String can be parsed as a floating point number.
+	 * @param str - the string to check
+	 * @return {@code true} if the given String can be parsed as a floating point number
+	 * @since 1.0.0
+	 */
+	public static boolean isFloating(String str)
+	{
+		return str.matches(FLOATING);
+	}
 	
 	/**
 	 * Returns an array of String objects containing the parts separated with the given identifier.
+	 * @param line - the line of text to split
+	 * @param sep - the splitting separator pattern
+	 * @param trim - trim each token?
+	 * @return an array of String objects containing the parts separated with the given identifier
 	 * @since 1.0.0
 	 */
 	public static String[] tokenize(String line, String sep, boolean trim)
@@ -32,7 +73,10 @@ public class StringUtil
 	}
 	
 	/**
-	 * Returns an array of String objects containing the parts separated with the given identifier.
+	 * Returns an array of String objects containing the parts separated with the given identifier. Calling this method is similar to calling {@code tokenize(line,sep,true)}.
+	 * @param line - the line of text to split
+	 * @param sep - the splitting separator pattern
+	 * @return an array of String objects containing the parts separated with the given identifier
 	 * @since 1.0.0
 	 */
 	public static String[] tokenize(String line, String sep)
@@ -41,82 +85,24 @@ public class StringUtil
 	}
 	
 	/**
-	 * Returns a reference free clone of the given array
+	 * Returns the given filler text with the integer number's string representation.
+	 * @param filler - the unfilled text to replace
+	 * @param integer - the number to replace the text with
+	 * @return the given filler text with the integer number's string representation
 	 * @since 1.0.0
 	 */
-	public static String[] clone(String[] a)
+	public static String fillWithNumber(String filler, int integer) 
 	{
-		String[] ret = new String[a.length];
-		for (int i=0,l=a.length; i<l; i++)
-		{
-			ret[i] = ""+a[i];
-		}
-		return ret;
-	}
-	
-	/*
-	 * Regular expressions for string checking.
-	 */
-	private static final String INTEGER 	= "[+-]?\\d+";
-	private static final String HEXADEC 	= "^(0x|0X|#).[0-9A-Fa-f]+";
-	private static final String FLOATING 	= "[+-]?((\\d+\\.?\\d*)|(\\.\\d+))";
-
-	/**
-	 * Returns true if the given String can be parsed as an integer number.
-	 * @since 1.0.0
-	 */
-	public static boolean isInteger(String str)
-	{
-		return str.matches(INTEGER);
-	}
-	
-	/**
-	 * Returns true if the given String can be parsed as an hexadecimal number.
-	 * @since 1.0.0
-	 */
-	public static boolean isHexadec(String str)
-	{
-		return str.matches(HEXADEC);
-	}
-	
-	/**
-	 * Returns true if the given String can be parsed as a floating point number.
-	 * @since 1.0.0
-	 */
-	public static boolean isFloating(String str)
-	{
-		return str.matches(FLOATING);
-	}
-	
-	/**
-	 * Parse the given String to a double primitive.<br>
-	 * @return -1.0 if an error occurs.
-	 * @since 1.0.0
-	 */
-	public static double toDouble(String v) 
-	{
-		if (isFloating(v))
-		{
-			return Double.parseDouble(v);
-		}
-		else 
-		{
-			return -1.0;
-		}
-	}
-	
-	/**
-	 * Replaces string representation of the given integer from the back of the given string.
-	 * @since 1.0.0
-	 */
-	public static String fillWithNumber(String filler, int i) 
-	{
-		String number = String.valueOf(i);
+		String number = String.valueOf(integer);
 		return filler.substring(number.length()) + number;
 	}
 	
 	/**
-	 * Returns the message with added characters until a given length has been reached. Clips the end of the string if it passes the length.
+	 * Returns the message with added characters until a given length has been reached. If the provided string is longer than the specified length, then the end is clipped from the string.
+	 * @param msg - the message to fill
+	 * @param chr - the filler character
+	 * @param leng - the length of the returning string
+	 * @return the message with added characters until a given length has been reached
 	 * @since 1.0.0
 	 */
 	public static String fill(String msg, String chr, int leng) 
@@ -128,34 +114,42 @@ public class StringUtil
 	}
 	
 	/**
-	 * Turn the string array into a string with the given separator, start- and end-index.
+	 * Turn the string array into a string with the given separator, start- and end-index. Returns the compiled array as a single string.
+	 * @param tokens - the string tokens
+	 * @param sep - the separator 
+	 * @param start - the starting index in the array
+	 * @param end - the ending index in the array
+	 * @return the compiled array as a single string
 	 * @since 1.0.0
 	 */
-	public static String compile(String[] t, String sep, int start, int end)
+	public static String compile(String[] tokens, String sep, int start, int end)
 	{
+		int i=start, e=end, l=tokens.length;
+		i = (i<0)?0:i;
+		e = (e<0)?0:e;
+		i = (i>=l)?l-1:i;
+		e = (e>=l)?l-1:e;
 		String str = "";
-		int i = start;
-		int l = end-1;
-		for (; i<=l; i++)
-		{
-			str = str + ((i==start)?"":sep) + t[i];
-		}
+		for (; i<=e; i++) str = str + ((i==start)?"":sep) + tokens[i];
 		return str;
 	}
 	
 	/**
-	 * Replaces all duplicate spaces with a single space.
-	 * @param line
-	 * @return the given text with all duplicate spaces removed
+	 * Returns the given text with all leading,ending and duplicate spaces removed.
+	 * @param line - the text to parse
+	 * @return the given text with all leading,ending and duplicate spaces removed
 	 * @since 1.0.0
 	 */
-	public static String compactSpaces(String line)
+	public static String compact(String line)
 	{
 		return line.trim().replaceAll("\\s{2,}", " ");
 	}
 	
 	/**
-	 * Strip the leading characters from the given string until the terminator has been found. The terminator character will not be included in the result.
+	 * Strip the leading characters from the given string until the terminator character has been found. The terminator character must be a single character, or nothing gets returned. Returns the string that follows after the first terminator character was found.
+	 * @param line - the text to parse
+	 * @param terminator - the terminator character
+	 * @return the string that follows after the first terminator character was found
 	 * @since 1.0.0
 	 */
 	public static String strip(String line, String terminator)
@@ -166,19 +160,20 @@ public class StringUtil
 		for (;i<l;i++)
 		{
 			String character = line.substring(i, i+1);
-			
 			if (character.equalsIgnoreCase(terminator))
 			{
 				remainder = line.substring( (i<l)?i+1:l ,l).trim();
 				break;
 			}
 		}
-		
 		return remainder;
 	}
 	
 	/**
-	 * Scan characters from the start of the given string until the terminator has been found. The result will not include the terminator character.
+	 * Scan characters from the start of the given string until the terminator has been found. Returns the scanned text before the first terminator was found. 
+	 * @param line - the text to parse
+	 * @param terminator - the terminator character
+	 * @return the scanned text before the first terminator was found
 	 * @since 1.0.0
 	 */
 	public static String scan(String line, String terminator)

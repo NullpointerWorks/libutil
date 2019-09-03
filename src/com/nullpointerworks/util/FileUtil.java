@@ -13,30 +13,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * 
+ * Contains a collection of static methods to help with file manipulation. 
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
 public class FileUtil 
 {
 	/**
-	 * Returns true if the given path points to an existing file
-	 * @since 1.0.0
-	 */
-	public static boolean exists(String path)
-	{
-		if ( !path.matches("(\\.[a-z]+)$") )
-		{
-			return false;
-		}
-		
-		File f = new File( path );
-		return f.exists();
-	}
-	
-	/**
-	 * Returns the path to the source code of this executable jar. When placed over LAN, <br>
-	 * @return a String with the URL
+	 * Returns the path to the source code of the specified class. This method returns an IP address when the application is called over LAN.
+	 * @param clazz - the class to request its source from
+	 * @return a String with the URL to the class
 	 * @since 1.0.0
 	 */
 	public static String getSourceCodePath(Class<?> clazz)
@@ -60,7 +46,22 @@ public class FileUtil
 	}
 	
 	/**
-	 * Returns the last portion of the given path that indicates the name of a file
+	 * Returns {@code true} if the given path points to an existing file.
+	 * @param path - the path to the file
+	 * @return {@code true} if the given path points to an existing file
+	 * @since 1.0.0
+	 */
+	public static boolean exists(String path)
+	{
+		if ( !path.matches("(\\.[a-z]+)$") ) return false;
+		File f = new File( path );
+		return f.exists();
+	}
+	
+	/**
+	 * Returns the name of the file or folder of the specified path.
+	 * @param path - the path to test
+	 * @return the name of the file or folder of the specified path
 	 * @since 1.0.0
 	 */
 	public static String getFileNameFromPath(String path)
@@ -72,7 +73,9 @@ public class FileUtil
 	}
 	
 	/**
-	 * 
+	 * Copies the content of the supplied directory or file object to another target location specified.
+	 * @param sourceDir - the source to copy
+	 * @param targetDir - the copy destination
 	 * @since 1.0.0
 	 */
 	public static void copyDirectory(File sourceDir , File targetDir) throws IOException 
@@ -97,7 +100,9 @@ public class FileUtil
     }
 	
 	/**
-	 * 
+	 * Copies the content of the supplied file object to another target location specified.
+	 * @param sourceDir - the source file to copy
+	 * @param targetDir - the file copy destination
 	 * @since 1.0.0
 	 */
 	public static void copyFile(File sourceFile, File destFile) throws IOException 
@@ -149,7 +154,10 @@ public class FileUtil
 	}
 	
 	/**
-	 * Swap the extension of the given string with another.
+	 * Returns the provided string with a filename with the desired extension.
+	 * @param fileName - the filename or path with a file
+	 * @param newExt - the desired extension
+	 * @return the provided string with a filename with the desired extension
 	 * @since 1.0.0
 	 */
 	public static String swapExtension(String fileName, String newExt) 
@@ -160,33 +168,29 @@ public class FileUtil
 	}
 	
 	/**
-	 * Parses a file extension behind the given text if there is no file extension added.
+	 * Returns the extension of the specified file name.
+	 * @param file - the filename
+	 * @return the extension of the specified file name
 	 * @since 1.0.0
 	 */
-	public static String getFileExtension(String str)
+	public static String getFileExtension(String file)
 	{
-		String[] tokens = str.split("\\.");
+		String[] tokens = file.split("\\.");
 		if (tokens.length < 2) return null;
-		String text = tokens[tokens.length-1];
-		return text;
+		return tokens[tokens.length-1];
 	}
 	
 	/**
-	 * Parses a file extension behind the given text if there is no file extension added.
+	 * Adds a file extension to the provided name. If the given name already has a file extension, then it is swapped for the specified extension. Returns {@code <name>.<ext>}.
+	 * @param name - the name to add the extension to
+	 * @param ext - the extension to add
+	 * @return {@code <name>.<ext>}
 	 * @since 1.0.0
 	 */
-	public static String addFileExtension(String text, String pend)
+	public static String addFileExtension(String name, String ext)
 	{
-		if (text.endsWith("."))
-		{
-			text = text+pend;
-		}
-		
-		if (!text.endsWith( "."+pend ))
-		{
-			text = text+"."+pend;
-		}
-		
-		return text;
+		if (name.endsWith(".")) return name+ext;
+		if (!name.endsWith( "."+ext )) return name+"."+ext;
+		return swapExtension(name, ext);
 	}
 }

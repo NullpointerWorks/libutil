@@ -3,7 +3,7 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading.event;
+package com.nullpointerworks.util.concurrency.event;
 
 /**
  * A multi-threading event callback interface meant to be used by the {@code EventManager<T>} class.

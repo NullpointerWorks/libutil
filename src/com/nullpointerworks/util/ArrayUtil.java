@@ -6,7 +6,7 @@
 package com.nullpointerworks.util;
 
 /**
- * Contains a set of static methods to concatenate or copy primitive type arrays.
+ * Contains a set of static methods to concatenate or copy various types of arrays.
  * @author Michiel Drost - Nullpointer Works
  * @since 1.0.0
  */
@@ -112,6 +112,31 @@ public class ArrayUtil
 		return totaldata;
 	}
 	
+	/** 
+	 * Concatenate the given String arrays. The returned array will contains all the values of the first array (arr0) followed by the content of the second (arr1).
+	 * @param arr0 - the first array
+	 * @param arr1 - the second array
+	 * @return a new combined array
+	 * @since 1.0.0
+	 */
+	public static String[] concatenate(String[] arr0, String[] arr1)
+	{
+		String[] totaldata = new String[arr0.length + arr1.length];
+		
+		int i=0;
+		for (String b : arr0)
+		{
+			totaldata[i] = b;
+			i++;
+		}
+		for (String b : arr1)
+		{
+			totaldata[i] = b;
+			i++;
+		}
+		return totaldata;
+	}
+	
 	// ===============================================
 	
 	/** 
@@ -184,5 +209,21 @@ public class ArrayUtil
 			i++;
 		}
 		return totaldata;
+	}
+	
+	/**
+	 * Copy the given String array.
+	 * @param arr - the array to copy
+	 * @return a new array 
+	 * @since 1.0.0
+	 */
+	public static String[] copy(String[] a)
+	{
+		String[] ret = new String[a.length];
+		for (int i=0,l=a.length; i<l; i++)
+		{
+			ret[i] = ""+a[i];
+		}
+		return ret;
 	}
 }

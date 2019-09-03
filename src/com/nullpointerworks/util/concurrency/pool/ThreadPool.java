@@ -3,15 +3,15 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading.pool;
+package com.nullpointerworks.util.concurrency.pool;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import com.nullpointerworks.util.Log;
-import com.nullpointerworks.util.threading.ReusableThread;
-import com.nullpointerworks.util.threading.Threading;
-import com.nullpointerworks.util.threading.UnavailablePoolException;
+import com.nullpointerworks.util.concurrency.ReusableThread;
+import com.nullpointerworks.util.concurrency.Threading;
+import com.nullpointerworks.util.concurrency.UnavailablePoolException;
 
 /**
  * The {@code ThreadPool} is an object that manages asynchronous execution of {@code Runnable} instances. It contains a fixed size of threads that execute from an unbounded queue. Any {@code Runnable} added to the queue will be executed as soon as a thread has completed its previous task and is next in line to be executed.

@@ -43,7 +43,7 @@ public class Delay
 	}
 	
 	/**
-	 * Returns {@code true} if the time added to the counter has exceeded the preset timing and has not exceeded it's maximum repeat count, if set. Returns {@code false} otherwise.
+	 * Returns {@code true} if the time added to the counter has exceeded the preset timing and has not exceeded it's maximum repeat count, if set. Returns {@code false} otherwise, or if not enabled.
 	 * @param time - the time to add before checking
 	 * @return {@code true} if the time added to the counter has exceeded the preset timing and has not exceeded it's maximum repeat count
 	 * @since 1.0.0
@@ -70,7 +70,7 @@ public class Delay
 	}
 	
 	/**
-	 * Returns {@code true} if the time counter has exceeded the preset timing, but has not exceeded it's maximum repeat count, if set. Returns {@code false} otherwise. Calling this method is similar to calling {@code onCheck(0f)}.
+	 * Returns {@code true} if the time counter has exceeded the preset timing, but has not exceeded it's maximum repeat count, if set. Returns {@code false} otherwise, or if not enabled. Calling this method is similar to calling {@code onCheck(0f)}.
 	 * @return {@code true} if the counter has exceeded the preset timing and has not exceeded it's maximum repeat count
 	 * @since 1.0.0
 	 */
@@ -80,7 +80,8 @@ public class Delay
 	}
 	
 	/**
-	 * 
+	 * Returns {@code true} if the delay is enabled.
+	 * @return {@code true} if the delay is enabled
 	 * @since 1.0.0
 	 */
 	public boolean isEnabled() 
@@ -89,7 +90,8 @@ public class Delay
 	}
 	
 	/**
-	 * 
+	 * Sets the delay timing. This will not reset the internal delay count.
+	 * @param time - the new maximum delay time
 	 * @since 1.0.0
 	 */
 	public void setDelay(float time)
@@ -98,16 +100,17 @@ public class Delay
 	}
 	
 	/**
-	 * 
+	 * Enable or disable the delay object.
+	 * @param enable - set {@code true} to enable the delay, {@code false} otherwise to disable
 	 * @since 1.0.0
 	 */
-	public void setEnabled(boolean enabled) 
+	public void setEnabled(boolean enable) 
 	{
-		this.enabled = enabled;
+		this.enabled = enable;
 	}
 	
 	/**
-	 * 
+	 * Hard resets the delay by settings all counters back to 0. This will also enable the delay.
 	 * @since 1.0.0
 	 */
 	public void reset()

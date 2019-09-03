@@ -3,10 +3,10 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading;
+package com.nullpointerworks.util.concurrency;
 
-import com.nullpointerworks.util.threading.pool.ThreadList;
-import com.nullpointerworks.util.threading.pool.ThreadPool;
+import com.nullpointerworks.util.concurrency.pool.ThreadList;
+import com.nullpointerworks.util.concurrency.pool.ThreadPool;
 
 /**
  * An ease-of-access method collection for threading utilities.

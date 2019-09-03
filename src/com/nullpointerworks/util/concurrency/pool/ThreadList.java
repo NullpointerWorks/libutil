@@ -3,13 +3,14 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading.pool;
+package com.nullpointerworks.util.concurrency.pool;
 
 import java.util.List;
-import java.util.ArrayList;
 
-import com.nullpointerworks.util.threading.ReusableThread;
-import com.nullpointerworks.util.threading.UnavailablePoolException;
+import com.nullpointerworks.util.concurrency.ReusableThread;
+import com.nullpointerworks.util.concurrency.UnavailablePoolException;
+
+import java.util.ArrayList;
 
 /**
  * The {@code ThreadList} is a subclass of the {@code ThreadPool} class with the additional feature of restocking the pool a fixed list of stored Runnable references. 

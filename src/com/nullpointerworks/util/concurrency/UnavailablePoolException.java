@@ -3,7 +3,7 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading;
+package com.nullpointerworks.util.concurrency;
 
 /**
  * The {@code UnavailablePoolException} is thrown when a method tries to fire an event through the {@code EventManager} while it's primary thread is not operational. 

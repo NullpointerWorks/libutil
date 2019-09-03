@@ -3,12 +3,12 @@
  * Nullpointer Works (2019)
  * Use is subject to license terms.
  */
-package com.nullpointerworks.util.threading.event;
+package com.nullpointerworks.util.concurrency.event;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.nullpointerworks.util.threading.UnavailablePoolException;
+import com.nullpointerworks.util.concurrency.UnavailablePoolException;
 
 import java.util.List;
 import java.util.Vector;
