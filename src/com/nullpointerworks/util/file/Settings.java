@@ -8,6 +8,7 @@ package com.nullpointerworks.util.file;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.nullpointerworks.util.StringUtil;
 import com.nullpointerworks.util.file.textfile.TextFile;
@@ -21,9 +22,10 @@ import com.nullpointerworks.util.file.textfile.TextFileParser;
 public class Settings 
 {
 	private boolean insertUnknown = false;
-	private ArrayList<String[]> settings;
+	private List<String[]> settings;
 	private String REM = ";";
 	private String SEP = "=";
+	private String NL = "\n";
 	private String path = null;
 	
 	/**
@@ -48,71 +50,63 @@ public class Settings
 	}
 	
 	/**
-	 * Add a default header and value into the settings register.
-	 * @param header - the header to add
-	 * @param value - the initial value
+	 * Insert a value into the settings collection. If the header is already present, then the value will be overridden, otherwise it's created as a new entry if the {@code unknown} flag has been set.
+	 * @param header - the setting header to locate
+	 * @param value - the value string to place
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void addDefault(String header, String value)
+	public Settings addDefault(String header, String value)
 	{
-		settings.add( new String[] {header,value} );
+		for (String[] sett : settings)
+		{
+			if (sett[0].equalsIgnoreCase(header))
+			{
+				sett[1] = value;
+				return this;
+			}
+		}
+		if (insertUnknown) 
+		{
+			settings.add( new String[] {header,value} );
+		}
+		return this;
 	}
 	
 	/**
 	 * Add a header to read from the settings file. The value of the header is set empty by default.
 	 * @param header - the header to add to the settings register
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void addHeader(String header)
+	public Settings addHeader(String header)
 	{
-		addDefault(header,"");
+		return addDefault(header,"");
 	}
 	
 	/**
 	 * Add a comment line to the settings file.
 	 * @param msg - the comment message to add
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void addComment(String msg) 
+	public Settings addComment(String msg) 
 	{
-		addDefault(REM,msg);
+		settings.add( new String[] {REM,msg} );
+		return this;
 	}
 	
 	/**
-	 * Insert a value into the settings collection. If the header is already present, then the value will be overridden, otherwise it's created as a new entry if the {@code unknown} flag has been set.
-	 * @param header - the setting header to locate
-	 * @param value - the value string to place
-	 * @since 1.0.0
-	 */
-	public void insert(String header, String value)
-	{
-		for (int i=0,l=settings.size(); i<l; i++)
-		{
-			String[] sett = settings.get(i);
-			if (sett[0].equalsIgnoreCase(header))
-			{
-				sett[1] = value;
-				return;
-			}
-		}
-		if (insertUnknown) addDefault(header, value);
-	}
-
-	/**
 	 * Returns the value associated with the given header if available. Returns {@code null} otherwise.
 	 * @param header - the setting header to locate
-	 * @return the value associated with the given header
+	 * @return the value associated with the given header, or {@code null} if it can't be found
 	 * @since 1.0.0
 	 */
 	public String getValue(String header)
 	{
-		for (int i=0,l=settings.size(); i<l; i++)
+		for (String[] sett : settings)
 		{
-			String[] sett = settings.get(i);
-			if (sett[0].equalsIgnoreCase(header))
-			{
-				return sett[1];
-			}
+			if (sett[0].equalsIgnoreCase(header)) return sett[1];
 		}
 		return null;
 	}
@@ -120,31 +114,37 @@ public class Settings
 	/**
 	 * Records can be added of which their header is not already present in the register. These records are not added by default. Set to {@code true} to enable this feature.
 	 * @param unknown - boolean to enable adding unknown headers
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void setUnknownFillFlag(boolean unknown)
+	public Settings setUnknownFillFlag(boolean unknown)
 	{
 		insertUnknown = unknown;
+		return this;
 	}
 	
 	/**
 	 * Set the character to be ignored be the parser
 	 * @param rem - the commentary character
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void setCommentMarker(String rem)
+	public Settings setCommentMarker(String rem)
 	{
 		REM = rem;
+		return this;
 	}
 	
 	/**
 	 * Set the {@code header:value} separator character
 	 * @param sep - the separation character
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void setSeparationMarker(String sep)
+	public Settings setSeparationMarker(String sep)
 	{
 		SEP = sep;
+		return this;
 	}
 	
 	/**
@@ -170,21 +170,23 @@ public class Settings
 	/**
 	 * Load a file which will be interpreted as settings. The used path is specified in the {@code Settings} constructor. The assumed file encoding is "UTF-16". If there was no path set during construction, this method will return.
 	 * @throws FileNotFoundException if the file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void load() throws FileNotFoundException
+	public Settings load() throws FileNotFoundException
 	{
-		if (path==null) return;
-		load(path);
+		if (path!=null) load(path);
+		return this;
 	}
 	
 	/**
 	 * Load a file which will be interpreted as settings. The assumed file encoding is "UTF-16".
 	 * @param path - the path to load from
 	 * @throws FileNotFoundException if the file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void load(String path) throws FileNotFoundException
+	public Settings load(String path) throws FileNotFoundException
 	{
 		TextFile file = TextFileParser.file(path);
 		String[] lines = file.getLines();
@@ -194,29 +196,32 @@ public class Settings
 			if (!rem.equalsIgnoreCase(REM))
 			{
 				String[] t = StringUtil.tokenize(s, SEP, StringUtil.TRIM);
-				insert(t[0], StringUtil.compile(t," ",1, t.length) );
+				addDefault(t[0], StringUtil.compile(t," ",1, t.length) );
 			}
 		}
+		return this;
 	}
 	
 	/**
 	 * Save the current settings at the specified path given in the {@code Settings} constructor. Default file encoding is "UTF-16". If there was no path set during construction, this method will return.
 	 * @throws IOException if an I/O error occurs
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void save() throws IOException
+	public Settings save() throws IOException
 	{
-		if (path==null) return;
-		save(path);
+		if (path!=null) save(path);
+		return this;
 	}
 	
 	/**
 	 * Save the current settings to a file. Default file encoding is "UTF-16".
 	 * @param path - the path to save to
 	 * @throws IOException if an I/O error occurs
+	 * @return a reference to this Settings object
 	 * @since 1.0.0
 	 */
-	public void save(String path) throws IOException
+	public Settings save(String path) throws IOException
 	{
 		TextFile file = new TextFile();
 		for (int i=0,l=settings.size(); i<l; i++)
@@ -225,13 +230,14 @@ public class Settings
 			
 			if (sett[0].equalsIgnoreCase(REM))
 			{
-				file.addLine(REM+" "+sett[1]);
+				file.addLine(REM+" "+sett[1]+NL);
 			}
 			else
 			{
-				file.addLine(sett[0]+SEP+sett[1]);
+				file.addLine(sett[0]+SEP+sett[1]+NL);
 			}
 		}
 		TextFileParser.write(path, file);
+		return this;
 	}
 }

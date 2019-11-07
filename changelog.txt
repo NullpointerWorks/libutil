@@ -1,8 +1,9 @@
 next update: 1.0.1
 
 bugfix: 
-FileUtil.getSourceCodePath(Class<?> clazz) removed a bad instruction. now correctly provides the source code filepath. 
-
+removed a bad instruction. now correctly provides the source code filepath. (FileUtil.getSourceCodePath(Class<?> clazz))
+added a newline character to save settings in the proper format. (com.nullpointerworks.util.file.Settings)
+changed some internal functionality to prevent future bugs. should have no impact on previous implementations. (com.nullpointerworks.util.file.Settings)
 
 1.0.0:
 initial release
