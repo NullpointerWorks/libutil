@@ -29,10 +29,7 @@ public class FileUtil
 	{
 		String fpath = clazz.getProtectionDomain().getCodeSource().getLocation().getFile();
 		fpath = fpath.replace("%20", " ");
-		fpath = fpath.substring(1);
-		
 		if ( !fpath.endsWith(".jar") ) return fpath;
-		
 		String apath = "";
 		String[] ts = fpath.split("/");
 		int i=0;

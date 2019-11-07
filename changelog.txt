@@ -1,0 +1,8 @@
+next update: 1.0.1
+
+bugfix: 
+FileUtil.getSourceCodePath(Class<?> clazz) removed a bad instruction. now correctly provides the source code filepath. 
+
+
+1.0.0:
+initial release
