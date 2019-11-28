@@ -1,9 +1,12 @@
 next update: 1.0.1
 
 bugfix: 
-removed a bad instruction. now correctly provides the source code filepath. (FileUtil.getSourceCodePath(Class<?> clazz))
-added a newline character to save settings in the proper format. (com.nullpointerworks.util.file.Settings)
-changed some internal functionality to prevent future bugs. should have no impact on previous implementations. (com.nullpointerworks.util.file.Settings)
+(FileUtil.getSourceCodePath(Class<?> clazz))
+Removed a bad instruction. Now correctly provides the source code filepath.
+
+(com.nullpointerworks.util.file.Settings)
+Added a newline character to save settings in the proper format. 
+Fixed setHeader() method. Now correctly adds new headers to the default list even though unknown headers are ignored by default.
 
 1.0.0:
 initial release

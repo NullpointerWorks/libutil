@@ -11,11 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nullpointerworks.util.StringUtil;
+import com.nullpointerworks.util.file.Encoding;
 import com.nullpointerworks.util.file.textfile.TextFile;
 import com.nullpointerworks.util.file.textfile.TextFileParser;
 
 /**
- * Contains an implementation of the {@code TextFile} object that serves as a settings parser. The default comment line marker is semicolon({@code ;}) and the header:value separation marker is the {@code =} sign.
+ * Contains an implementation of the {@code TextFile} object that 
+ * serves as a settings parser. The default comment line marker is 
+ * semicolon({@code ;}) and the header:value separation marker is 
+ * the {@code =} sign.
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
@@ -50,6 +54,18 @@ public class Settings
 	}
 	
 	/**
+	 * Records can be added of which their header is not already present in the register. These records are not added by default. Set to {@code true} to enable this feature.
+	 * @param unknown - boolean to enable adding unknown headers
+	 * @return a reference to this Settings object
+	 * @since 1.0.0
+	 */
+	public Settings setUnknownFillFlag(boolean unknown)
+	{
+		insertUnknown = unknown;
+		return this;
+	}
+	
+	/**
 	 * Insert a value into the settings collection. If the header is already present, then the value will be overridden, otherwise it's created as a new entry if the {@code unknown} flag has been set.
 	 * @param header - the setting header to locate
 	 * @param value - the value string to place
@@ -66,10 +82,7 @@ public class Settings
 				return this;
 			}
 		}
-		if (insertUnknown) 
-		{
-			settings.add( new String[] {header,value} );
-		}
+		if (insertUnknown) put(header,value);
 		return this;
 	}
 	
@@ -81,7 +94,11 @@ public class Settings
 	 */
 	public Settings addHeader(String header)
 	{
-		return addDefault(header,"");
+		boolean b = insertUnknown;
+		insertUnknown = true;
+		addDefault(header,"");
+		insertUnknown = b;
+		return this;
 	}
 	
 	/**
@@ -92,7 +109,15 @@ public class Settings
 	 */
 	public Settings addComment(String msg) 
 	{
-		settings.add( new String[] {REM,msg} );
+		return put(REM,msg);
+	}
+	
+	/*
+	 * @since 1.0.1
+	 */
+	private Settings put(String key, String value) 
+	{
+		settings.add( new String[] {key,value} );
 		return this;
 	}
 	
@@ -109,18 +134,6 @@ public class Settings
 			if (sett[0].equalsIgnoreCase(header)) return sett[1];
 		}
 		return null;
-	}
-	
-	/**
-	 * Records can be added of which their header is not already present in the register. These records are not added by default. Set to {@code true} to enable this feature.
-	 * @param unknown - boolean to enable adding unknown headers
-	 * @return a reference to this Settings object
-	 * @since 1.0.0
-	 */
-	public Settings setUnknownFillFlag(boolean unknown)
-	{
-		insertUnknown = unknown;
-		return this;
 	}
 	
 	/**
@@ -165,6 +178,17 @@ public class Settings
 	public String getSeparationMarker()
 	{
 		return SEP;
+	}
+	
+	/**
+	 * Clears the settings register.
+	 * @return a reference to this Settings object
+	 * @since 1.1.0
+	 */
+	public Settings clear() 
+	{
+		settings.clear();
+		return this;
 	}
 	
 	/**
@@ -224,6 +248,7 @@ public class Settings
 	public Settings save(String path) throws IOException
 	{
 		TextFile file = new TextFile();
+		file.setEncoding(Encoding.UTF8);
 		for (int i=0,l=settings.size(); i<l; i++)
 		{
 			String[] sett = settings.get(i);
@@ -237,7 +262,7 @@ public class Settings
 				file.addLine(sett[0]+SEP+sett[1]+NL);
 			}
 		}
-		TextFileParser.write(path, file);
+		TextFileParser.write(path, file, true);
 		return this;
 	}
 }
