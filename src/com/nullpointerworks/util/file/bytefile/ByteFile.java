@@ -90,7 +90,7 @@ public class ByteFile
 	{
 		for (byte b : data)
 		{
-			this.data.add(b);
+			addByte(b);
 		}
 	}
 	
@@ -107,7 +107,7 @@ public class ByteFile
 		length = ((chunk.length-offset) >= length)?(chunk.length-offset-1):length;
 		for (int i=offset, l=offset+length; i<l; i++)
 		{
-			data.add( chunk[i] );
+			addByte( chunk[i] );
 		}
 	}
 	
@@ -129,12 +129,53 @@ public class ByteFile
 	
 	/**
 	 * Places a byte of data at the end of the file array.
-	 * @param data - he byte to place
+	 * @param data - the byte to place
 	 * @since 1.0.0
 	 */
 	public void addByte(byte data) 
 	{
 		this.data.add(data);
+	}
+	
+	/**
+	 * Places a short (2 bytes) of data at the end of the file array. The MSB of the short are places first in the array.
+	 * @param data - the short to place
+	 * @since 1.0.1
+	 */
+	public void addShort(short data) 
+	{
+		addByte( (byte)((data>>8)&0xFF) );
+		addByte( (byte)(data&0xFF) );
+	}
+	
+	/**
+	 * Places an integer (4 bytes) of data at the end of the file array. The MSB of the integer are places first in the array.
+	 * @param data - the integer to place
+	 * @since 1.0.1
+	 */
+	public void addInteger(int data) 
+	{
+		addByte( (byte)((data>>24)&0xFF) );
+		addByte( (byte)((data>>16)&0xFF) );
+		addByte( (byte)((data>>8)&0xFF) );
+		addByte( (byte)(data&0xFF) );
+	}
+	
+	/**
+	 * Places a long (8 bytes) of data at the end of the file array. The MSB of the long are places first in the array.
+	 * @param data - the long to place
+	 * @since 1.0.1
+	 */
+	public void addLong(long data) 
+	{
+		addByte( (byte)((data>>56)&0xFF) );
+		addByte( (byte)((data>>48)&0xFF) );
+		addByte( (byte)((data>>40)&0xFF) );
+		addByte( (byte)((data>>32)&0xFF) );
+		addByte( (byte)((data>>24)&0xFF) );
+		addByte( (byte)((data>>16)&0xFF) );
+		addByte( (byte)((data>>8)&0xFF) );
+		addByte( (byte)(data&0xFF) );
 	}
 	
 	/**

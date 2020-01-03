@@ -160,7 +160,7 @@ public class FileUtil
 	public static String swapExtension(String fileName, String newExt) 
 	{
 		String[] tok = fileName.split("\\.");
-		String res = StringUtil.compile(tok, ".", 0, tok.length-1);
+		String res = StringUtil.compile(tok, ".", 0, tok.length-2);
 		return addFileExtension(res, newExt);
 	}
 	

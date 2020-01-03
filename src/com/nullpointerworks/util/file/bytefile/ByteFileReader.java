@@ -171,16 +171,16 @@ public class ByteFileReader
 	
 	private final short toShort(byte a, byte b)
 	{
-		return (short) ( a<<8 | b );
+		return (short) ( ((a<<8)) | (b&0xFF) );
 	}
 		
 	private final int toInt(byte a, byte b,byte c,byte d)
 	{
-		return (int)( a<<24 | b<<16 | c<<8 | d );
+		return (int)( (a<<24) | (b<<16) | (c<<8) | (d&0xFF) );
 	}
 	
 	private final long toLong(byte a, byte b,byte c,byte d, byte e, byte f,byte g,byte h)
 	{
-		return (long)( a<<56 | b<<48 | c<<40 | d<<32 | e<<24 | f<<16 | g<<8 | h );
+		return (long)( (a<<56) | (b<<48) | (c<<40) | (d<<32) | (e<<24) | (f<<16) | (g<<8) | (h&0xFF) );
 	}
 }

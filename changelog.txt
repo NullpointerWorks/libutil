@@ -3,10 +3,14 @@ next update: 1.0.1
 bugfix: 
 com.nullpointerworks.util.FileUtil
 - Removed a bad instruction in getSourceCodePath(Class<?>). Now correctly provides the source file path.
+- Fixed the swapExtension() method which didn't swap, but instead just added the new extension.
 
 com.nullpointerworks.util.file.Settings
 - Added a newline character to save settings in the proper format. 
 - Fixed setHeader() method. Now correctly adds new headers to the default list even though unknown headers are ignored by default.
+
+com.nullpointerworks.util.file.bytefile.ByteFile
+- Added methods for adding short, int and long data types instead of just bytes.
 
 1.0.0:
 initial release
