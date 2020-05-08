@@ -23,7 +23,7 @@ import java.util.jar.JarFile;
  * @since 1.0.0
  * @author Michiel Drost - Nullpointer Works
  */
-public class ClassManager
+public class ClassManager// extends ClassLoader
 {
 	private static ClassManager inst = null;
 	
@@ -36,6 +36,16 @@ public class ClassManager
 	{
 		if (inst == null) inst = new ClassManager();
 		return inst;
+	}
+	
+	/**
+	 * Returns a new instance of the {@code ClassManager} object.
+	 * @return a new instance of the {@code ClassManager} object
+	 * @since 1.1.0
+	 */
+	public static ClassManager newInstance()
+	{
+		return new ClassManager();
 	}
 	
 	// =============================================================
@@ -101,10 +111,12 @@ public class ClassManager
 	{
 		if (!path.endsWith(".jar")) return;
 		
-		JarFile jarFile 			= new JarFile(path);
 		URL[] urls 					= { new URL("jar:file:" + path+"!/") };
-		URLClassLoader cl 			= new URLClassLoader(urls);
+		URLClassLoader cl 			= new URLClassLoader(urls); //new URLClassLoader(urls, this);
+		
+		JarFile jarFile 			= new JarFile(path);
 		Enumeration<JarEntry> e 	= jarFile.entries();
+		
 		while (e.hasMoreElements()) 
 		{
 		    JarEntry je = e.nextElement();
