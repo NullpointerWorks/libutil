@@ -1,7 +1,7 @@
 /*
- * Creative Commons - Attribution, Share Alike 4.0 
- * Nullpointer Works (2019)
- * Use is subject to license terms.
+ * This is free and unencumbered software released into the public domain.
+ * (http://unlicense.org/)
+ * Nullpointer Works (2021)
  */
 package com.nullpointerworks.util.file;
 
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nullpointerworks.util.StringUtil;
-import com.nullpointerworks.util.file.Encoding;
 import com.nullpointerworks.util.file.textfile.TextFile;
 import com.nullpointerworks.util.file.textfile.TextFileParser;
 
