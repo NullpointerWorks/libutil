@@ -1,4 +1,3 @@
-<a target="_blank" href="https://unlicense.org"><img src="https://unlicense.org/pd-icon.png" alt="Unlicense" width="40"/> Unlicense</a>
 
 # libutil
 Provides a wide range of utilities from file reading/writing, custom classloading, threading management and much more. 
